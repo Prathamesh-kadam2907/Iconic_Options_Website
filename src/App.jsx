@@ -32,9 +32,10 @@ import TenantsNav from "./component/Navbar/TenantsNav";
 import PgHostel from "./component/Navbar/PgHostel";
 import PaymentCheckout from "./component/Subscriptions/PaymentCheckout";
 import LoginPopUp from "./component/Navbar/LoginPopUp";
-import BuilderDashboard from "./component/BuilderProject/BuilderDashboard";
-import BuilderLogin from "./component/BuilderProject/BuilderLogin";
-import BuilderRegister from "./component/BuilderProject/BuilderRegister";
+import BuilderDashboard from "./BuilderProject/BuilderDashboard";
+import BuilderLogin from "./BuilderProject/BuilderLogin";
+import BuilderRegister from "./BuilderProject/BuilderRegister";
+import BuilderLayout from "./layouts/BuilderLayout";
 
 const App = () => {
   return (
@@ -80,6 +81,11 @@ const App = () => {
         <Route path="/buyernav" element={<BuyerNav />} />
         <Route path="/tenantnav" element={<TenantsNav />} />
         <Route path="/pghostel" element={<PgHostel />} />
+
+        {/* BUILDER SIDE */}
+        <Route element={<BuilderLayout />}>
+          <Route path="/builderdashboard" element={<BuilderDashboard />} />
+        </Route>
       </Routes>
     </>
   );

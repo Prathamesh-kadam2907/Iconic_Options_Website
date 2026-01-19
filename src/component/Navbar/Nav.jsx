@@ -122,7 +122,6 @@ const Nav = () => {
       text-sm md:text-[15px] lg:text-base xl:text-lg 
       font-semibold text-gray-700 p-4 lg:p-0 relative"
             >
-             
               <div className="absolute bottom-0 left-0 hidden md:block w-full">
                 <div
                   className="absolute h-[2px] bg-teal-600 transition-all duration-300"
@@ -131,16 +130,15 @@ const Nav = () => {
                     left: buyerOpen
                       ? "0%"
                       : tenantOpen
-                      ? "33.33%"
-                      : pgOpen
-                      ? "66.66%"
-                      : "0%",
+                        ? "33.33%"
+                        : pgOpen
+                          ? "66.66%"
+                          : "0%",
                     opacity: buyerOpen || tenantOpen || pgOpen ? 1 : 0,
                   }}
                 />
               </div>
 
-             
               <li
                 className="cursor-pointer hover:text-teal-600"
                 onMouseEnter={openBuyer}
@@ -174,7 +172,6 @@ const Nav = () => {
                 PG / Hostel
               </li>
 
-             
               <li className="md:hidden border-t pt-4 space-y-3">
                 <button
                   onClick={() => navigate("/postproperty")}
@@ -183,7 +180,6 @@ const Nav = () => {
                   Post Property
                 </button>
 
-         
                 {user && (
                   <button
                     onClick={() => navigate("/subscription")}
@@ -235,7 +231,6 @@ const Nav = () => {
             </span>
           </button>
 
-         
           {user && (
             <div>
               <button
@@ -252,7 +247,6 @@ const Nav = () => {
                      group-hover:translate-x-[150px] transition-all duration-700"
                 ></span>
 
-               
                 <span className=" relative z-10 text-xs md:text-sm tracking-wide">
                   My Plans
                 </span>
@@ -363,7 +357,7 @@ const Nav = () => {
                   </div>
 
                   {planOpen && (
-                    <div className="bg-gray-50 border-t">
+                    <div className="bg-white border-t">
                       <div
                         onClick={() => {
                           navigate("/buyer-plan");

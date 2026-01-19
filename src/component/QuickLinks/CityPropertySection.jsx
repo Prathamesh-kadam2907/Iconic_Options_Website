@@ -76,18 +76,7 @@ const data = {
     "Independent Floor for Sale in Pune",
     "Bank Auction Properties for Sale in Pune",
   ],
-  Gurgaon: [
-    "1 BHK Flats in Gurgaon",
-    "2 BHK Flats in Gurgaon",
-    "3 BHK Flats in Gurgaon",
-    "4+ BHK Flats in Gurgaon",
-    "Fully Furnished Flats in Gurgaon",
-    "Semi Furnished Flats in Gurgaon",
-    "Independent Houses For Sale in Gurgaon",
-    "Flats For Sale Below 60 Lakhs",
-    "Flats For Sale Below 90 Lakhs",
-    "Properties for Sale in Gurgaon",
-  ],
+  
 };
 
 const CityPropertySection = ({ onClose }) => {

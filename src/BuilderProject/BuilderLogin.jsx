@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import DummyBuilders from "../../utils/DummyBuilders";
+import DummyBuilders from "../utils/DummyBuilders";
 import { FaUser, FaLock, FaBuilding, FaEye, FaEyeSlash, FaIdCard } from "react-icons/fa";
 
 const BuilderLogin = () => {
