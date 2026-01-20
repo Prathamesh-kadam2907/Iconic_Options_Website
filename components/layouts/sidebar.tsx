@@ -7,8 +7,11 @@ import AnimateHeight from 'react-animate-height';
 import { IRootState } from '@/store';
 import { useState, useEffect } from 'react';
 
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { usePathname } from 'next/navigation';
 import { getTranslation } from '@/i18n';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Sidebar = () => {
     const dispatch = useDispatch();
@@ -74,8 +77,7 @@ const Sidebar = () => {
                             type="button"
                             className="collapse-icon flex h-8 w-8 items-center rounded-full transition duration-300 hover:bg-gray-500/10 rtl:rotate-180 dark:text-white-light dark:hover:bg-dark-light/10"
                             onClick={() => dispatch(toggleSidebar())}
-                        >
-                        </button>
+                        ></button>
                     </div>
                     <PerfectScrollbar className="relative h-[calc(100vh-80px)]">
                         <ul className="relative space-y-0.5 p-4 py-0 font-semibold">
@@ -85,8 +87,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('dashboard')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'dashboard' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'dashboard' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'dashboard' ? 'auto' : 0}>
@@ -116,7 +117,9 @@ const Sidebar = () => {
                                     <li className="nav-item">
                                         <Link href="/apps/chat" className="group">
                                             <div className="flex items-center">
-                                                <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('chat')}</span>
+                                                <span className="">
+                                                    {t('chat')}
+                                                </span>
                                             </div>
                                         </Link>
                                     </li>
@@ -162,8 +165,7 @@ const Sidebar = () => {
                                                 <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('invoice')}</span>
                                             </div>
 
-                                            <div className={currentMenu !== 'invoice' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                            </div>
+                                            <div className={currentMenu !== 'invoice' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                         </button>
 
                                         <AnimateHeight duration={300} height={currentMenu === 'invoice' ? 'auto' : 0}>
@@ -204,8 +206,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('components')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'component' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'component' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'component' ? 'auto' : 0}>
@@ -262,8 +263,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('elements')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'element' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'element' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'element' ? 'auto' : 0}>
@@ -376,8 +376,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('datatables')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'datalabel' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'datalabel' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'datalabel' ? 'auto' : 0}>
@@ -425,8 +424,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('forms')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'forms' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'forms' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'forms' ? 'auto' : 0}>
@@ -490,8 +488,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('users')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'users' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'users' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'users' ? 'auto' : 0}>
@@ -512,8 +509,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('pages')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'page' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'page' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'page' ? 'auto' : 0}>
@@ -553,8 +549,7 @@ const Sidebar = () => {
                                                 onClick={() => setErrorSubMenu(!errorSubMenu)}
                                             >
                                                 {t('error')}
-                                                <div className={`${errorSubMenu ? '-rotate-90 rtl:rotate-90' : ''} ltr:ml-auto rtl:mr-auto`}>
-                                                </div>
+                                                <div className={`${errorSubMenu ? '-rotate-90 rtl:rotate-90' : ''} ltr:ml-auto rtl:mr-auto`}></div>
                                             </button>
                                             <AnimateHeight duration={300} height={errorSubMenu ? 'auto' : 0}>
                                                 <ul className="sub-menu text-gray-500">
@@ -592,8 +587,7 @@ const Sidebar = () => {
                                         <span className="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">{t('authentication')}</span>
                                     </div>
 
-                                    <div className={currentMenu !== 'auth' ? '-rotate-90 rtl:rotate-90' : ''}>
-                                    </div>
+                                    <div className={currentMenu !== 'auth' ? '-rotate-90 rtl:rotate-90' : ''}></div>
                                 </button>
 
                                 <AnimateHeight duration={300} height={currentMenu === 'auth' ? 'auto' : 0}>
