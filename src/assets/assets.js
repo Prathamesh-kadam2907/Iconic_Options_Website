@@ -26,6 +26,7 @@ import icici from "./icici.png"
 import appartment from "./appartment.jpg"
 import villas from "./villas.jpg"
 
+
 export const assets = {
     icons,
     img,

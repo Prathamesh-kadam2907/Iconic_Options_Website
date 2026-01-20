@@ -48,14 +48,13 @@ const BuilderRegister = () => {
     "All of the above",
   ];
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
-    // Clear error for this field
+
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -64,7 +63,6 @@ const BuilderRegister = () => {
     }
   };
 
-  // Validate form
   const validateForm = () => {
     const newErrors = {};
 
@@ -104,7 +102,6 @@ const BuilderRegister = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -114,9 +111,7 @@ const BuilderRegister = () => {
 
     setIsLoading(true);
 
-    // Simulate API call
     setTimeout(() => {
-      // Save builder data to localStorage
       const builderData = {
         ...formData,
         id: Date.now(),
@@ -126,14 +121,12 @@ const BuilderRegister = () => {
         projectsCompleted: 0,
       };
 
-      // Get existing builders or initialize array
       const existingBuilders = JSON.parse(
-        localStorage.getItem("builders") || "[]"
+        localStorage.getItem("builders") || "[]",
       );
       existingBuilders.push(builderData);
       localStorage.setItem("builders", JSON.stringify(existingBuilders));
 
-      // Also save to current builder session
       localStorage.setItem(
         "currentBuilder",
         JSON.stringify({
@@ -141,7 +134,7 @@ const BuilderRegister = () => {
           company: builderData.companyName,
           builderId: builderData.builderId,
           email: builderData.email,
-        })
+        }),
       );
 
       setIsLoading(false);
@@ -162,7 +155,6 @@ const BuilderRegister = () => {
       onKeyPress={handleKeyPress}
     >
       <div className="w-full max-w-5xl">
-       
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">
             Join Our Builder Network
@@ -174,7 +166,6 @@ const BuilderRegister = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6">
-          
           <div className="lg:w-2/5">
             <div className="bg-white rounded-2xl shadow-xl p-6 h-full">
               <div className="flex items-center mb-6">
@@ -237,7 +228,6 @@ const BuilderRegister = () => {
                 ))}
               </div>
 
-           
               <div className="mt-8 p-4 bg-purple-50 rounded-xl">
                 <h3 className="font-semibold text-gray-800 mb-3">
                   Verification Process
@@ -266,7 +256,6 @@ const BuilderRegister = () => {
             </div>
           </div>
 
-        
           <div className="lg:w-3/5">
             <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
               <h2 className="text-2xl font-bold text-gray-800 mb-6">
@@ -274,9 +263,7 @@ const BuilderRegister = () => {
               </h2>
 
               <form onSubmit={handleSubmit} className="space-y-4">
-              
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                 
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       Company Name *
@@ -305,7 +292,6 @@ const BuilderRegister = () => {
                     )}
                   </div>
 
-                 
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       Builder Name *
@@ -335,9 +321,7 @@ const BuilderRegister = () => {
                   </div>
                 </div>
 
-                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                 
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       Email Address *
@@ -366,7 +350,6 @@ const BuilderRegister = () => {
                     )}
                   </div>
 
-                  
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       Phone Number *
@@ -396,9 +379,7 @@ const BuilderRegister = () => {
                   </div>
                 </div>
 
-                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                 
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       Builder ID *
@@ -430,7 +411,6 @@ const BuilderRegister = () => {
                     )}
                   </div>
 
-                
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       License Number *
@@ -460,7 +440,6 @@ const BuilderRegister = () => {
                   </div>
                 </div>
 
-                
                 <div>
                   <label className="block text-sm font-semibold mb-1 text-gray-700">
                     Business Address *
@@ -484,7 +463,6 @@ const BuilderRegister = () => {
                   )}
                 </div>
 
-               
                 <div>
                   <label className="block text-sm font-semibold mb-1 text-gray-700">
                     Specialization *
@@ -513,9 +491,7 @@ const BuilderRegister = () => {
                   )}
                 </div>
 
-               
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       Password *
@@ -555,7 +531,6 @@ const BuilderRegister = () => {
                     )}
                   </div>
 
-                 
                   <div>
                     <label className="block text-sm font-semibold mb-1 text-gray-700">
                       Confirm Password *
@@ -598,7 +573,6 @@ const BuilderRegister = () => {
                   </div>
                 </div>
 
-             
                 <div className="pt-2">
                   <label className="flex items-start">
                     <input
@@ -629,7 +603,6 @@ const BuilderRegister = () => {
                   )}
                 </div>
 
-               
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -649,7 +622,6 @@ const BuilderRegister = () => {
                   )}
                 </button>
 
-               
                 <div className="text-center pt-4">
                   <p className="text-gray-600 text-sm">
                     Already have a builder account?{" "}

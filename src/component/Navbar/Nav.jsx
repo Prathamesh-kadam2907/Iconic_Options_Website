@@ -333,6 +333,14 @@ const Nav = () => {
                 <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm">
                   My Listing
                 </div>
+                <div
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm"
+                  onClick={() => {
+                    navigate("/builderdashboard");
+                  }}
+                >
+                  Builder
+                </div>
 
                 <div
                   onClick={() => {

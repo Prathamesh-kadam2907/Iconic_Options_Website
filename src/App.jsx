@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Nav from "./component/Navbar/Nav";
 import SignIn from "./component/Navbar/SignIn";
 import SignUp from "./component/Navbar/SignUp";
@@ -38,9 +38,12 @@ import BuilderRegister from "./BuilderProject/BuilderRegister";
 import BuilderLayout from "./layouts/BuilderLayout";
 
 const App = () => {
+  const location = useLocation();
+  const isBuilderRoute = location.pathname.startsWith("/builder");
   return (
     <>
-      <Nav />
+      {/* <Nav /> */}
+      {!isBuilderRoute && <Nav />}
 
       <Routes>
         <Route path="/" element={<Home />} />
@@ -85,6 +88,8 @@ const App = () => {
         {/* BUILDER SIDE */}
         <Route element={<BuilderLayout />}>
           <Route path="/builderdashboard" element={<BuilderDashboard />} />
+          <Route path="/builderlogin" element={<BuilderLogin />} />
+          <Route path="/builderregister" element={<BuilderRegister />} />
         </Route>
       </Routes>
     </>
