@@ -51,7 +51,7 @@
     }
 
     body {
-        @apply bg-[#fafafa] font-nunito;
+        @apply bg-white font-nunito;
     }
 
     body.dark {
@@ -78,11 +78,6 @@
     }
     .horizontal .navbar-floating header .horizontal-menu {
         @apply rounded-b-md;
-    }
-
-    /* Sidebar */
-    .sidebar:hover .nav-item > a {
-        @apply w-auto;
     }
 
     .sidebar .nav-item > button,
@@ -115,10 +110,9 @@ hover:text-primary hover:before:!bg-primary ltr:before:mr-2 rtl:before:ml-2 dark
     }
 
     .main-container .main-content {
-        @apply transition-all duration-300 lg:ltr:ml-[260px] lg:rtl:mr-[260px];
+        @apply transition-all duration-300;
     }
 
-    /* Horizontal layouts */
     .horizontal .horizontal-menu {
         @apply hidden shadow-md lg:flex;
     }

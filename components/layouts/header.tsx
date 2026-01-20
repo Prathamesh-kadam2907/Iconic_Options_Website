@@ -1,13 +1,14 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { IRootState } from '@/store';
 import { toggleTheme, toggleSidebar, toggleRTL } from '@/store/themeConfigSlice';
 import Dropdown from '@/components/dropdown';
-
 import { usePathname, useRouter } from 'next/navigation';
 import { getTranslation } from '@/i18n';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faChevronDown, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
     const pathname = usePathname();
@@ -15,895 +16,457 @@ const Header = () => {
     const router = useRouter();
     const { t, i18n } = getTranslation();
 
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [navMenuOpen, setNavMenuOpen] = useState(false);
+    const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const [planOpen, setPlanOpen] = useState(false);
+    const [buyerOpen, setBuyerOpen] = useState(false);
+    const [tenantOpen, setTenantOpen] = useState(false);
+    const [pgOpen, setPgOpen] = useState(false);
+
+    const closeTimer = useRef<NodeJS.Timeout | null>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    // Mock user - replace with your actual user state
+    const [user, setUser] = useState<any>(null);
+
     useEffect(() => {
-        const selector = document.querySelector('ul.horizontal-menu a[href="' + window.location.pathname + '"]');
-        if (selector) {
-            const all: any = document.querySelectorAll('ul.horizontal-menu .nav-link.active');
-            for (let i = 0; i < all.length; i++) {
-                all[0]?.classList.remove('active');
+        // Load user from localStorage or your auth system
+        const loadUser = () => {
+            const userData = localStorage.getItem('user');
+            if (userData) {
+                setUser(JSON.parse(userData));
             }
+        };
+        loadUser();
+    }, []);
 
-            let allLinks = document.querySelectorAll('ul.horizontal-menu a.active');
-            for (let i = 0; i < allLinks.length; i++) {
-                const element = allLinks[i];
-                element?.classList.remove('active');
+    useEffect(() => {
+        const handler = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setNavMenuOpen(false);
             }
-            selector?.classList.add('active');
-
-            const ul: any = selector.closest('ul.sub-menu');
-            if (ul) {
-                let ele: any = ul.closest('li.menu').querySelectorAll('.nav-link');
-                if (ele) {
-                    ele = ele[0];
-                    setTimeout(() => {
-                        ele?.classList.add('active');
-                    });
-                }
-            }
-        }
-    }, [pathname]);
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
 
     const isRtl = useSelector((state: IRootState) => state.themeConfig.rtlClass) === 'rtl';
-
     const themeConfig = useSelector((state: IRootState) => state.themeConfig);
-    const setLocale = (flag: string) => {
-        if (flag.toLowerCase() === 'ae') {
-            dispatch(toggleRTL('rtl'));
-        } else {
-            dispatch(toggleRTL('ltr'));
-        }
-        router.refresh();
+
+    const buyerMenuItems = {
+        title: 'BUY A HOME',
+        categories: [{ name: 'COMMERCIAL', link: '#' }],
+        cities: [
+            {
+                name: 'Flats for Sale in Hyderabad',
+                subItems: [
+                    'Flats for Sale in Banjara Hills',
+                    'Flats for Sale in Jubilee Hills',
+                    'Flats for Sale in Madhapur',
+                    'Flats for Sale in Gachibowli',
+                    'Flats for Sale in Kondapur',
+                    'Flats for Sale in Kukatpally',
+                ],
+            },
+            {
+                name: 'Flats for Sale in Delhi',
+                subItems: ['Flats for Sale in Vasant Vihar', 'Flats for Sale in Safdarjung Enclave', 'Flats for Sale in Hauz Khas', 'Flats for Sale in Greater Kailash'],
+            },
+            {
+                name: 'Flats for Sale in Mumbai',
+                subItems: ['Flats for Sale in Andheri West', 'Flats for Sale in Andheri East', 'Flats for Sale in Malad West', 'Flats for Sale in Navi Mumbai'],
+            },
+            {
+                name: 'Flats for Sale in Chennai',
+                subItems: ['Flats for Sale in Velachery', 'Flats for Sale in Thiruvvanmiyur', 'Flats for Sale in Medavakkam'],
+            },
+            {
+                name: 'Flats for Sale in Pune',
+                subItems: ['Flats for Sale in Wakad', 'Flats for Sale in Kharadi', 'Flats for Sale in Baner'],
+            },
+        ],
     };
 
-    function createMarkup(messages: any) {
-        return { __html: messages };
-    }
-    const [messages, setMessages] = useState([
-        {
-            id: 1,
-            image: '<span class="grid place-content-center w-9 h-9 rounded-full bg-success-light dark:bg-success text-success dark:text-success-light"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></span>',
-            title: 'Congratulations!',
-            message: 'Your OS has been updated.',
-            time: '1hr',
-        },
-        {
-            id: 2,
-            image: '<span class="grid place-content-center w-9 h-9 rounded-full bg-info-light dark:bg-info text-info dark:text-info-light"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg></span>',
-            title: 'Did you know?',
-            message: 'You can switch between artboards.',
-            time: '2hr',
-        },
-        {
-            id: 3,
-            image: '<span class="grid place-content-center w-9 h-9 rounded-full bg-danger-light dark:bg-danger text-danger dark:text-danger-light"> <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span>',
-            title: 'Something went wrong!',
-            message: 'Send Reposrt',
-            time: '2days',
-        },
-        {
-            id: 4,
-            image: '<span class="grid place-content-center w-9 h-9 rounded-full bg-warning-light dark:bg-warning text-warning dark:text-warning-light"><svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">    <circle cx="12" cy="12" r="10"></circle>    <line x1="12" y1="8" x2="12" y2="12"></line>    <line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span>',
-            title: 'Warning',
-            message: 'Your password strength is low.',
-            time: '5days',
-        },
-    ]);
-
-    const removeMessage = (value: number) => {
-        setMessages(messages.filter((user) => user.id !== value));
+    const tenantsMenuItems = {
+        title: 'RENT A HOME',
+        categories: [{ name: 'COMMERCIAL', link: '#' }],
+        cities: [
+            {
+                name: 'Flats for Rent in Hyderabad',
+                subItems: ['Flats for Rent in Banjara Hills', 'Flats for Rent in Jubilee Hills', 'Flats for Rent in Madhapur', 'Flats for Rent in Gachibowli'],
+            },
+            {
+                name: 'Flats for Rent in Delhi',
+                subItems: ['Flats for Rent in Vasant Vihar', 'Flats for Rent in Safdarjung Enclave', 'Flats for Rent in Hauz Khas'],
+            },
+            {
+                name: 'Flats for Rent in Mumbai',
+                subItems: ['Flats for Rent in Andheri West', 'Flats for Rent in Andheri East', 'Flats for Rent in Malad West'],
+            },
+            {
+                name: 'Flats for Rent in Chennai',
+                subItems: ['Flats for Rent in Velachery', 'Flats for Rent in Thiruvvanmiyur'],
+            },
+            {
+                name: 'Flats for Rent in Pune',
+                subItems: ['Flats for Rent in Wakad', 'Flats for Rent in Kharadi'],
+            },
+        ],
     };
 
-    const [notifications, setNotifications] = useState([
-        {
-            id: 1,
-            profile: 'user-profile.jpeg',
-            message: '<strong class="text-sm mr-1">John Doe</strong>invite you to <strong>Prototyping</strong>',
-            time: '45 min ago',
-        },
-        {
-            id: 2,
-            profile: 'profile-34.jpeg',
-            message: '<strong class="text-sm mr-1">Adam Nolan</strong>mentioned you to <strong>UX Basics</strong>',
-            time: '9h Ago',
-        },
-        {
-            id: 3,
-            profile: 'profile-16.jpeg',
-            message: '<strong class="text-sm mr-1">Anna Morgan</strong>Upload a file',
-            time: '9h Ago',
-        },
-    ]);
-
-    const removeNotification = (value: number) => {
-        setNotifications(notifications.filter((user) => user.id !== value));
+    const pgHostelMenuItems = {
+        title: 'PG / HOSTEL',
+        categories: [],
+        cities: [
+            {
+                name: 'PG in Hyderabad',
+                subItems: ['PG in Banjara Hills', 'PG in Jubilee Hills', 'PG in Madhapur', 'PG in Gachibowli'],
+            },
+            {
+                name: 'PG in Delhi',
+                subItems: ['PG in Vasant Vihar', 'PG in Safdarjung Enclave', 'PG in Hauz Khas'],
+            },
+            {
+                name: 'PG in Mumbai',
+                subItems: ['PG in Andheri West', 'PG in Andheri East', 'PG in Malad West'],
+            },
+            {
+                name: 'PG in Chennai',
+                subItems: ['PG in Velachery', 'PG in Thiruvvanmiyur'],
+            },
+            {
+                name: 'PG in Pune',
+                subItems: ['PG in Wakad', 'PG in Kharadi'],
+            },
+        ],
     };
 
-    const [search, setSearch] = useState(false);
+    const openBuyer = () => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setBuyerOpen(true);
+        setTenantOpen(false);
+        setPgOpen(false);
+    };
+
+    const openTenant = () => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setTenantOpen(true);
+        setBuyerOpen(false);
+        setPgOpen(false);
+    };
+
+    const openPg = () => {
+        if (closeTimer.current) clearTimeout(closeTimer.current);
+        setPgOpen(true);
+        setBuyerOpen(false);
+        setTenantOpen(false);
+    };
+
+    const closeAll = () => {
+        closeTimer.current = setTimeout(() => {
+            setBuyerOpen(false);
+            setTenantOpen(false);
+            setPgOpen(false);
+        }, 200);
+    };
+
+    const renderMegaMenu = (menuItems: any) => (
+        <div className="bg-white shadow-xl rounded-lg border border-gray-200 p-6">
+            <div className="mb-4 flex items-center justify-between border-b pb-3">
+                <h3 className="text-sm font-semibold text-gray-700">{menuItems.title}</h3>
+                {menuItems.categories && menuItems.categories.length > 0 && (
+                    <div className="flex space-x-2">
+                        {menuItems.categories.map((cat: any, idx: number) => (
+                            <Link key={idx} href={cat.link} className="text-xs font-semibold text-gray-700 hover:text-teal-600 transition-colors">
+                                {cat.name}
+                            </Link>
+                        ))}
+                    </div>
+                )}
+            </div>
+            <div className="grid grid-cols-5 gap-4">
+                {menuItems.cities.map((city: any, idx: number) => (
+                    <div key={idx}>
+                        <h4 className="font-semibold text-sm mb-2 text-gray-800">{city.name}</h4>
+                        <ul className="space-y-1">
+                            {city.subItems.map((item: string, subIdx: number) => (
+                                <li key={subIdx}>
+                                    <Link href="#" className="text-xs text-gray-600 hover:text-teal-600 transition-colors block">
+                                        {item}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 
     return (
-        <header className={`z-40 ${themeConfig.semidark && themeConfig.menu === 'horizontal' ? 'dark' : ''}`}>
-            <div className="shadow-sm">
-                <div className="relative flex w-full items-center bg-white px-5 py-2.5 dark:bg-black">
-                    <div className="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2 lg:hidden">
-                        <Link href="/" className="main-logo flex shrink-0 items-center">
-                            <img className="inline w-8 ltr:-ml-1 rtl:-mr-1" src="/assets/images/logo.svg" alt="logo" />
-                            <span className="hidden align-middle text-2xl  font-semibold  transition-all duration-300 ltr:ml-1.5 rtl:mr-1.5 dark:text-white-light md:inline">VRISTO</span>
-                        </Link>
-                        <button
-                            type="button"
-                            className="collapse-icon flex flex-none rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary ltr:ml-2 rtl:mr-2 dark:bg-dark/40 dark:text-[#d0d2d6] dark:hover:bg-dark/60 dark:hover:text-primary lg:hidden"
-                            onClick={() => dispatch(toggleSidebar())}
-                        >
-                        </button>
-                    </div>
-
-                    <div className="hidden ltr:mr-2 rtl:ml-2 sm:block">
-                        <ul className="flex items-center space-x-2 rtl:space-x-reverse dark:text-[#d0d2d6]">
-                            <li>
-                                <Link href="/apps/calendar" className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/apps/todolist" className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/apps/chat" className="block rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60">
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="flex items-center space-x-1.5 ltr:ml-auto rtl:mr-auto rtl:space-x-reverse dark:text-[#d0d2d6] sm:flex-1 ltr:sm:ml-0 sm:rtl:mr-0 lg:space-x-2">
-                        <div className="sm:ltr:mr-auto sm:rtl:ml-auto">
-                            <form
-                                className={`${search && '!block'} absolute inset-x-0 top-1/2 z-10 mx-4 hidden -translate-y-1/2 sm:relative sm:top-0 sm:mx-0 sm:block sm:translate-y-0`}
-                                onSubmit={() => setSearch(false)}
-                            >
-                                <div className="relative">
-                                    <input
-                                        type="text"
-                                        className="peer form-input bg-gray-100 placeholder:tracking-widest ltr:pl-9 ltr:pr-9 rtl:pl-9 rtl:pr-9 sm:bg-transparent ltr:sm:pr-4 rtl:sm:pl-4"
-                                        placeholder="Search..."
-                                    />
-                                    <button type="button" className="absolute inset-0 h-9 w-9 appearance-none peer-focus:text-primary ltr:right-auto rtl:left-auto">
-                                    </button>
-                                    <button type="button" className="absolute top-1/2 block -translate-y-1/2 hover:opacity-80 ltr:right-2 rtl:left-2 sm:hidden" onClick={() => setSearch(false)}>
-                                    </button>
-                                </div>
-                            </form>
-                            <button
-                                type="button"
-                                onClick={() => setSearch(!search)}
-                                className="search_btn rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 dark:bg-dark/40 dark:hover:bg-dark/60 sm:hidden"
-                            >
-                            </button>
-                        </div>
-                        <div>
-                            {themeConfig.theme === 'light' ? (
-                                <button
-                                    className={`${
-                                        themeConfig.theme === 'light' &&
-                                        'flex items-center rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60'
-                                    }`}
-                                    onClick={() => dispatch(toggleTheme('dark'))}
-                                >
-                                </button>
-                            ) : (
-                                ''
-                            )}
-                            {themeConfig.theme === 'dark' && (
-                                <button
-                                    className={`${
-                                        themeConfig.theme === 'dark' &&
-                                        'flex items-center rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60'
-                                    }`}
-                                    onClick={() => dispatch(toggleTheme('system'))}
-                                >
-                                </button>
-                            )}
-                            {themeConfig.theme === 'system' && (
-                                <button
-                                    className={`${
-                                        themeConfig.theme === 'system' &&
-                                        'flex items-center rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60'
-                                    }`}
-                                    onClick={() => dispatch(toggleTheme('light'))}
-                                >
-                                </button>
-                            )}
-                        </div>
-                        <div className="dropdown shrink-0">
-                            <Dropdown
-                                offset={[0, 8]}
-                                placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-                                btnClassName="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60"
-                                button={i18n.language && <img className="h-5 w-5 rounded-full object-cover" src={`/assets/images/flags/${i18n.language.toUpperCase()}.svg`} alt="flag" />}
-                            >
-                                <ul className="grid w-[280px] grid-cols-2 gap-2 !px-2 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
-                                    {themeConfig.languageList.map((item: any) => {
-                                        return (
-                                            <li key={item.code}>
-                                                <button
-                                                    type="button"
-                                                    className={`flex w-full hover:text-primary ${i18n.language === item.code ? 'bg-primary/10 text-primary' : ''}`}
-                                                    onClick={() => {
-                                                        i18n.changeLanguage(item.code);
-                                                        setLocale(item.code);
-                                                    }}
-                                                >
-                                                    <img src={`/assets/images/flags/${item.code.toUpperCase()}.svg`} alt="flag" className="h-5 w-5 rounded-full object-cover" />
-                                                    <span className="ltr:ml-3 rtl:mr-3">{item.name}</span>
-                                                </button>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </Dropdown>
-                        </div>
-                        <div className="dropdown shrink-0">
-                            <Dropdown
-                                offset={[0, 8]}
-                                placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-                                btnClassName="block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60"
-                            >
-                                <ul className="w-[300px] !py-0 text-xs text-dark dark:text-white-dark sm:w-[375px]">
-                                    <li className="mb-5" onClick={(e) => e.stopPropagation()}>
-                                        <div className="relative !h-[68px] w-full overflow-hidden rounded-t-md p-5 text-white hover:!bg-transparent">
-                                            <div className="bg- absolute inset-0 h-full w-full bg-[url(/assets/images/menu-heade.jpg)] bg-cover bg-center bg-no-repeat"></div>
-                                            <h4 className="relative z-10 text-lg font-semibold">Messages</h4>
-                                        </div>
-                                    </li>
-                                    {messages.length > 0 ? (
-                                        <>
-                                            <li onClick={(e) => e.stopPropagation()}>
-                                                {messages.map((message) => {
-                                                    return (
-                                                        <div key={message.id} className="flex items-center px-5 py-3">
-                                                            <div dangerouslySetInnerHTML={createMarkup(message.image)}></div>
-                                                            <span className="px-3 dark:text-gray-500">
-                                                                <div className="text-sm font-semibold dark:text-white-light/90">{message.title}</div>
-                                                                <div>{message.message}</div>
-                                                            </span>
-                                                            <span className="whitespace-pre rounded bg-white-dark/20 px-1 font-semibold text-dark/60 ltr:ml-auto ltr:mr-2 rtl:ml-2 rtl:mr-auto dark:text-white-dark">
-                                                                {message.time}
-                                                            </span>
-                                                            <button type="button" className="text-neutral-300 hover:text-danger" onClick={() => removeMessage(message.id)}>
-                                                            </button>
-                                                        </div>
-                                                    );
-                                                })}
-                                            </li>
-                                            <li className="mt-5 border-t border-white-light text-center dark:border-white/10">
-                                                <button type="button" className="group !h-[48px] justify-center !py-4 font-semibold text-primary dark:text-gray-400">
-                                                    <span className="group-hover:underline ltr:mr-1 rtl:ml-1">VIEW ALL ACTIVITIES</span>
-                                                </button>
-                                            </li>
-                                        </>
-                                    ) : (
-                                        <li className="mb-5" onClick={(e) => e.stopPropagation()}>
-                                            <button type="button" className="!grid min-h-[200px] place-content-center text-lg hover:!bg-transparent">
-                                                <div className="mx-auto mb-4 rounded-full text-white ring-4 ring-primary/30">
-                                                </div>
-                                                No data available.
-                                            </button>
-                                        </li>
-                                    )}
-                                </ul>
-                            </Dropdown>
-                        </div>
-                        <div className="dropdown shrink-0">
-                            <Dropdown
-                                offset={[0, 8]}
-                                placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-                                btnClassName="relative block p-2 rounded-full bg-white-light/40 dark:bg-dark/40 hover:text-primary hover:bg-white-light/90 dark:hover:bg-dark/60"
-                                button={
-                                    <span>
-                                        <span className="absolute top-0 flex h-3 w-3 ltr:right-0 rtl:left-0">
-                                            <span className="absolute -top-[3px] inline-flex h-full w-full animate-ping rounded-full bg-success/50 opacity-75 ltr:-left-[3px] rtl:-right-[3px]"></span>
-                                            <span className="relative inline-flex h-[6px] w-[6px] rounded-full bg-success"></span>
-                                        </span>
-                                    </span>
-                                }
-                            >
-                                <ul className="w-[300px] divide-y !py-0 text-dark dark:divide-white/10 dark:text-white-dark sm:w-[350px]">
-                                    <li onClick={(e) => e.stopPropagation()}>
-                                        <div className="flex items-center justify-between px-4 py-2 font-semibold">
-                                            <h4 className="text-lg">Notification</h4>
-                                            {notifications.length ? <span className="badge bg-primary/80">{notifications.length}New</span> : ''}
-                                        </div>
-                                    </li>
-                                    {notifications.length > 0 ? (
-                                        <>
-                                            {notifications.map((notification) => {
-                                                return (
-                                                    <li key={notification.id} className="dark:text-white-light/90" onClick={(e) => e.stopPropagation()}>
-                                                        <div className="group flex items-center px-4 py-2">
-                                                            <div className="grid place-content-center rounded">
-                                                                <div className="relative h-12 w-12">
-                                                                    <img className="h-12 w-12 rounded-full object-cover" alt="profile" src={`/assets/images/${notification.profile}`} />
-                                                                    <span className="absolute bottom-0 right-[6px] block h-2 w-2 rounded-full bg-success"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div className="flex flex-auto ltr:pl-3 rtl:pr-3">
-                                                                <div className="ltr:pr-3 rtl:pl-3">
-                                                                    <h6
-                                                                        dangerouslySetInnerHTML={{
-                                                                            __html: notification.message,
-                                                                        }}
-                                                                    ></h6>
-                                                                    <span className="block text-xs font-normal dark:text-gray-500">{notification.time}</span>
-                                                                </div>
-                                                                <button
-                                                                    type="button"
-                                                                    className="text-neutral-300 opacity-0 hover:text-danger group-hover:opacity-100 ltr:ml-auto rtl:mr-auto"
-                                                                    onClick={() => removeNotification(notification.id)}
-                                                                >
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                );
-                                            })}
-                                            <li>
-                                                <div className="p-4">
-                                                    <button className="btn btn-primary btn-small block w-full">Read All Notifications</button>
-                                                </div>
-                                            </li>
-                                        </>
-                                    ) : (
-                                        <li onClick={(e) => e.stopPropagation()}>
-                                            <button type="button" className="!grid min-h-[200px] place-content-center text-lg hover:!bg-transparent">
-                                                <div className="mx-auto mb-4 rounded-full ring-4 ring-primary/30">
-                                                </div>
-                                                No data available.
-                                            </button>
-                                        </li>
-                                    )}
-                                </ul>
-                            </Dropdown>
-                        </div>
-                        <div className="dropdown flex shrink-0">
-                            <Dropdown
-                                offset={[0, 8]}
-                                placement={`${isRtl ? 'bottom-start' : 'bottom-end'}`}
-                                btnClassName="relative group block"
-                                button={<img className="h-9 w-9 rounded-full object-cover saturate-50 group-hover:saturate-100" src="/assets/images/user-profile.jpeg" alt="userProfile" />}
-                            >
-                                <ul className="w-[230px] !py-0 font-semibold text-dark dark:text-white-dark dark:text-white-light/90">
-                                    <li>
-                                        <div className="flex items-center px-4 py-4">
-                                            <img className="h-10 w-10 rounded-md object-cover" src="/assets/images/user-profile.jpeg" alt="userProfile" />
-                                            <div className="truncate ltr:pl-4 rtl:pr-4">
-                                                <h4 className="text-base">
-                                                    John Doe
-                                                    <span className="rounded bg-success-light px-1 text-xs text-success ltr:ml-2 rtl:ml-2">Pro</span>
-                                                </h4>
-                                                <button type="button" className="text-black/60 hover:text-primary dark:text-dark-light/60 dark:hover:text-white">
-                                                    johndoe@gmail.com
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <Link href="/users/profile" className="dark:hover:text-white">
-                                            Profile
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/apps/mailbox" className="dark:hover:text-white">
-                                            Inbox
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/auth/boxed-lockscreen" className="dark:hover:text-white">
-                                            Lock Screen
-                                        </Link>
-                                    </li>
-                                    <li className="border-t border-white-light dark:border-white-light/10">
-                                        <Link href="/auth/boxed-signin" className="!py-3 text-danger">
-                                            Sign Out
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </Dropdown>
-                        </div>
-                    </div>
+        <header className="sticky top-0 z-50 bg-white shadow-sm">
+            <div className="relative flex w-full items-center justify-between px-5 py-2.5 border-b border-gray-200">
+                <div className="horizontal-logo flex items-center justify-between ltr:mr-2 rtl:ml-2">
+                    <Link href="/" className="main-logo flex shrink-0 items-center">
+                        <img className="inline w-auto h-12 ltr:-ml-1 rtl:-mr-1" src="/assets/images/logo.png" alt="Iconic Options Logo" />
+                    </Link>
                 </div>
 
-                {/* horizontal menu */}
-                <ul className="horizontal-menu hidden border-t border-[#ebedf2] bg-white px-6 py-1.5 font-semibold text-black rtl:space-x-reverse dark:border-[#191e3a] dark:bg-black dark:text-white-dark lg:space-x-1.5 xl:space-x-8">
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('dashboard')}</span>
-                            </div>
-                            <div className="right_arrow">
-                            </div>
+                <button className="md:hidden text-2xl sm:text-3xl" onClick={() => setMenuOpen(!menuOpen)}>
+                    <FontAwesomeIcon icon={faBars} />{' '}
+                </button>
+
+                <div
+                    className={`navbar absolute md:static top-20 left-0 w-full md:w-auto bg-white md:bg-transparent shadow-lg md:shadow-none transition-all duration-300 ease-in-out ${
+                        menuOpen ? 'block' : 'hidden md:block'
+                    }`}
+                    onMouseEnter={() => closeTimer.current && clearTimeout(closeTimer.current)}
+                    onMouseLeave={closeAll}
+                >
+                    <ul className="flex flex-col md:flex-row gap-3 md:gap-6 lg:gap-14 text-sm md:text-[15px] lg:text-base xl:text-lg font-semibold text-gray-700 p-4 lg:p-0 relative">
+                        <div className="absolute bottom-0 left-0 hidden md:block w-full">
+                            <div
+                                className="absolute h-[2px] bg-teal-600 transition-all duration-300"
+                                style={{
+                                    width: '33.33%',
+                                    left: buyerOpen ? '0%' : tenantOpen ? '33.33%' : pgOpen ? '66.66%' : '0%',
+                                    opacity: buyerOpen || tenantOpen || pgOpen ? 1 : 0,
+                                }}
+                            />
+                        </div>
+
+                        <li
+                            className="cursor-pointer hover:text-teal-600 transition-colors"
+                            onMouseEnter={openBuyer}
+                            onClick={() => {
+                                openBuyer();
+                                setMenuOpen(false);
+                            }}
+                        >
+                            Buyer
+                        </li>
+
+                        <li
+                            className="cursor-pointer hover:text-teal-600 transition-colors"
+                            onMouseEnter={openTenant}
+                            onClick={() => {
+                                openTenant();
+                                setMenuOpen(false);
+                            }}
+                        >
+                            Tenants
+                        </li>
+
+                        <li
+                            className="cursor-pointer hover:text-teal-600 transition-colors"
+                            onMouseEnter={openPg}
+                            onClick={() => {
+                                openPg();
+                                setMenuOpen(false);
+                            }}
+                        >
+                            PG / Hostel
+                        </li>
+
+                        {/* Mobile Only Buttons */}
+                        <li className="md:hidden border-t pt-4 space-y-3">
+                            <button
+                                onClick={() => router.push('/postproperty')}
+                                className="w-full bg-teal-600 text-white py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-teal-700 transition-colors"
+                            >
+                                Post Property
+                            </button>
+
+                            {user && (
+                                <button
+                                    onClick={() => router.push('/subscription')}
+                                    className="w-full bg-emerald-500 text-white py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-emerald-600 transition-colors"
+                                >
+                                    My Plans
+                                </button>
+                            )}
+
+                            {!user ? (
+                                <>
+                                    <button onClick={() => router.push('/signin')} className="w-full border py-2 rounded-lg text-xs sm:text-sm hover:border-teal-600 transition-colors">
+                                        Login
+                                    </button>
+                                    <button onClick={() => router.push('/signup')} className="w-full bg-gray-800 text-white py-2 rounded-lg text-xs sm:text-sm hover:bg-gray-900 transition-colors">
+                                        Sign Up
+                                    </button>
+                                </>
+                            ) : (
+                                <button onClick={() => router.push('/profile')} className="w-full border py-2 rounded-lg text-xs sm:text-sm hover:border-teal-600 transition-colors">
+                                    My Profile
+                                </button>
+                            )}
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Desktop Right Side Actions */}
+                <div className="hidden md:flex items-center gap-4 lg:gap-6">
+                    <button
+                        onClick={() => router.push('/postproperty')}
+                        className="relative group flex items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-600 to-emerald-500 text-white font-semibold shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105"
+                    >
+                        <span className="absolute inset-0 rounded-full border border-white/30 group-hover:blur-sm"></span>
+                        <span className="absolute -left-10 top-0 h-full w-10 bg-white/30 rotate-12 group-hover:translate-x-[150px] transition-all duration-700"></span>
+                        <span className="relative z-10 text-xs md:text-sm tracking-wide">Post Property</span>
+                    </button>
+
+                    {user && (
+                        <button
+                            onClick={() => router.push('/subscription')}
+                            className="hidden xl:flex relative group items-center gap-2 px-6 py-2 rounded-full bg-gradient-to-r from-teal-600 to-emerald-500 text-white font-semibold shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
+                        >
+                            <span className="absolute inset-0 rounded-full border border-white/25 group-hover:blur-sm"></span>
+                            <span className="absolute -left-12 top-0 h-full w-10 bg-white/20 rotate-12 group-hover:translate-x-[150px] transition-all duration-700"></span>
+                            <span className="relative z-10 text-xs md:text-sm tracking-wide">My Plans</span>
                         </button>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link href="/">{t('sales')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/analytics">{t('analytics')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/finance">{t('finance')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/crypto">{t('crypto')}</Link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('apps')}</span>
-                            </div>
-                            <div className="right_arrow">
-                            </div>
-                        </button>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link href="/apps/chat">{t('chat')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/apps/mailbox">{t('mailbox')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/apps/todolist">{t('todo_list')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/apps/notes">{t('notes')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/apps/scrumboard">{t('scrumboard')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/apps/contacts">{t('contacts')}</Link>
-                            </li>
-                            <li className="relative">
-                                <button type="button">
-                                    {t('invoice')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
+                    )}
+
+                    {!user ? (
+                        <div className="flex gap-4">
+                            <button onClick={() => router.push('/signin')} className="px-4 py-1.5 border rounded-full hover:border-teal-600 transition-colors">
+                                Login
+                            </button>
+                            <button onClick={() => router.push('/signup')} className="px-4 py-1.5 bg-teal-600 text-white rounded-full hover:bg-teal-700 transition-colors">
+                                Sign Up
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="relative">
+                            <button onClick={() => setUserMenuOpen(!userMenuOpen)} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                                <img src={user.photo || '/assets/images/user-profile.jpeg'} className="w-9 h-9 rounded-full border-2 border-gray-200" alt="User" />
+                                <span className="text-sm font-semibold">{user.name}</span>
+                                <FontAwesomeIcon icon={faChevronDown} className="text-xs" />
+                            </button>
+
+                            {userMenuOpen && (
+                                <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md border border-gray-200 overflow-hidden">
+                                    <div
+                                        onClick={() => {
+                                            router.push('/profile');
+                                            setUserMenuOpen(false);
+                                        }}
+                                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors"
+                                    >
+                                        Manage Profile
                                     </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/apps/invoice/list">{t('list')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/apps/invoice/preview">{t('preview')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/apps/invoice/add">{t('add')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/apps/invoice/edit">{t('edit')}</Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <Link href="/apps/calendar">{t('calendar')}</Link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('components')}</span>
-                            </div>
-                            <div className="right_arrow">
-                            </div>
-                        </button>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link href="/components/tabs">{t('tabs')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/accordions">{t('accordions')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/modals">{t('modals')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/cards">{t('cards')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/carousel">{t('carousel')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/countdown">{t('countdown')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/counter">{t('counter')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/sweetalert">{t('sweet_alerts')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/timeline">{t('timeline')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/notifications">{t('notifications')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/media-object">{t('media_object')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/list-group">{t('list_group')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/pricing-table">{t('pricing_tables')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/components/lightbox">{t('lightbox')}</Link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('elements')}</span>
-                            </div>
-                            <div className="right_arrow">
-                            </div>
-                        </button>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link href="/elements/alerts">{t('alerts')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/avatar">{t('avatar')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/badges">{t('badges')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/breadcrumbs">{t('breadcrumbs')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/buttons">{t('buttons')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/buttons-group">{t('button_groups')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/color-library">{t('color_library')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/dropdown">{t('dropdown')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/infobox">{t('infobox')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/jumbotron">{t('jumbotron')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/loader">{t('loader')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/pagination">{t('pagination')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/popovers">{t('popovers')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/progress-bar">{t('progress_bar')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/search">{t('search')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/tooltips">{t('tooltips')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/treeview">{t('treeview')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/elements/typography">{t('typography')}</Link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('tables')}</span>
-                            </div>
-                            <div className="right_arrow">
-                            </div>
-                        </button>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link href="/tables">{t('tables')}</Link>
-                            </li>
-                            <li className="relative">
-                                <button type="button">
-                                    {t('datatables')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
+                                    <div
+                                        onClick={() => {
+                                            router.push('/profile');
+                                            setUserMenuOpen(false);
+                                        }}
+                                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors"
+                                    >
+                                        Change Password
                                     </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/datatables/basic">{t('basic')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/advanced">{t('advanced')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/skin">{t('skin')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/order-sorting">{t('order_sorting')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/multi-column">{t('multi_column')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/multiple-tables">{t('multiple_tables')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/alt-pagination">{t('alt_pagination')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/checkbox">{t('checkbox')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/range-search">{t('range_search')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/export">{t('export')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/datatables/column-chooser">{t('column_chooser')}</Link>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('forms')}</span>
-                            </div>
-                            <div className="right_arrow">
-                            </div>
+                                    <div
+                                        onClick={() => {
+                                            localStorage.removeItem('user');
+                                            setUser(null);
+                                            router.push('/');
+                                            setUserMenuOpen(false);
+                                        }}
+                                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-red-600 border-t transition-colors"
+                                    >
+                                        Sign Out
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Menu Dropdown */}
+                    <div className="relative" ref={menuRef}>
+                        <button onClick={() => setNavMenuOpen(!navMenuOpen)} className="flex items-center gap-2 text-gray-700 hover:text-teal-600 transition-colors">
+                            <FontAwesomeIcon icon={faBars} />
+                            <span className="text-xs sm:text-sm lg:text-base font-semibold">Menu</span>
                         </button>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link href="/forms/basic">{t('basic')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/input-group">{t('input_group')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/layouts">{t('layouts')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/validation">{t('validation')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/input-mask">{t('input_mask')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/select2">{t('select2')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/touchspin">{t('touchspin')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/checkbox-radio">{t('checkbox_and_radio')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/switches">{t('switches')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/wizards">{t('wizards')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/file-upload">{t('file_upload')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/quill-editor">{t('quill_editor')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/markdown-editor">{t('markdown_editor')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/date-picker">{t('date_and_range_picker')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/forms/clipboard">{t('clipboard')}</Link>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('pages')}</span>
+
+                        {navMenuOpen && (
+                            <div className="absolute right-0 mt-3 w-52 bg-white shadow-xl rounded-lg border border-gray-200 overflow-hidden">
+                                <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors">My Wishlist</div>
+                                <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors">My Activity</div>
+                                <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors">My Listing</div>
+                                <div
+                                    onClick={() => {
+                                        router.push('/postproperty');
+                                        setNavMenuOpen(false);
+                                    }}
+                                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors"
+                                >
+                                    Post Your Property
+                                </div>
+
+                                <div className="relative">
+                                    <div onClick={() => setPlanOpen(!planOpen)} className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm flex justify-between items-center transition-colors">
+                                        My Subscription Plans
+                                        <FontAwesomeIcon icon={faChevronDown} className={`text-xs transition-transform ${planOpen ? 'rotate-180' : ''}`} />
+                                    </div>
+
+                                    {planOpen && (
+                                        <div className="bg-gray-50 border-t">
+                                            <div
+                                                onClick={() => {
+                                                    router.push('/buyer-plan');
+                                                    setNavMenuOpen(false);
+                                                }}
+                                                className="px-6 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors"
+                                            >
+                                                Buyer Plan
+                                            </div>
+                                            <div
+                                                onClick={() => {
+                                                    router.push('/tenant-plan');
+                                                    setNavMenuOpen(false);
+                                                }}
+                                                className="px-6 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors"
+                                            >
+                                                Tenants Plan
+                                            </div>
+                                            <div
+                                                onClick={() => {
+                                                    router.push('/commercial-plan');
+                                                    setNavMenuOpen(false);
+                                                }}
+                                                className="px-6 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors"
+                                            >
+                                                Commercial Plan
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm transition-colors">Contact Us</div>
+                                <div className="px-4 py-2 text-xs text-gray-500 border-t bg-gray-50">Email: assist@iconicoptions.in</div>
                             </div>
-                            <div className="right_arrow">
-                            </div>
-                        </button>
-                        <ul className="sub-menu">
-                            <li className="relative">
-                                <button type="button">
-                                    {t('users')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
-                                    </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/users/profile">{t('profile')}</Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/users/user-account-settings">{t('account_settings')}</Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <Link href="/pages/knowledge-base">{t('knowledge_base')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/pages/contact-us-boxed" target="_blank">
-                                    {t('contact_us_boxed')}
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/pages/contact-us-cover" target="_blank">
-                                    {t('contact_us_cover')}
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/pages/faq">{t('faq')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/pages/coming-soon-boxed" target="_blank">
-                                    {t('coming_soon_boxed')}
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/pages/coming-soon-cover" target="_blank">
-                                    {t('coming_soon_cover')}
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/pages/maintenence" target="_blank">
-                                    {t('maintenence')}
-                                </Link>
-                            </li>
-                            <li className="relative">
-                                <button type="button">
-                                    {t('error')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">                                    </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/pages/error404" target="_blank">
-                                            {t('404')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/pages/error500" target="_blank">
-                                            {t('500')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/pages/error503" target="_blank">
-                                            {t('503')}
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="relative">
-                                <button type="button">
-                                    {t('login')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
-                                    </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/auth/cover-login" target="_blank">
-                                            {t('login_cover')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/auth/boxed-signin" target="_blank">
-                                            {t('login_boxed')}
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="relative">
-                                <button type="button">
-                                    {t('register')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
-                                    </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/auth/cover-register" target="_blank">
-                                            {t('register_cover')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/auth/boxed-signup" target="_blank">
-                                            {t('register_boxed')}
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="relative">
-                                <button type="button">
-                                    {t('password_recovery')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
-                                    </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/auth/cover-password-reset" target="_blank">
-                                            {t('recover_id_cover')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/auth/boxed-password-reset" target="_blank">
-                                            {t('recover_id_boxed')}
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="relative">
-                                <button type="button">
-                                    {t('lockscreen')}
-                                    <div className="-rotate-90 ltr:ml-auto rtl:mr-auto rtl:rotate-90">
-                                    </div>
-                                </button>
-                                <ul className="absolute top-0 z-[10] hidden min-w-[180px] rounded bg-white p-0 py-2 text-dark shadow ltr:left-[95%] rtl:right-[95%] dark:bg-[#1b2e4b] dark:text-white-dark">
-                                    <li>
-                                        <Link href="/auth/cover-lockscreen" target="_blank">
-                                            {t('unlock_cover')}
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link href="/auth/boxed-lockscreen" target="_blank">
-                                            {t('unlock_boxed')}
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li className="menu nav-item relative">
-                        <button type="button" className="nav-link">
-                            <div className="flex items-center">
-                                <span className="px-1">{t('more')}</span>
-                            </div>
-                            <div className="right_arrow">
-                            </div>
-                        </button>
-                        <ul className="sub-menu">
-                            <li>
-                                <Link href="/dragndrop">{t('drag_and_drop')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/charts">{t('charts')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/font-icons">{t('font_icons')}</Link>
-                            </li>
-                            <li>
-                                <Link href="/widgets">{t('widgets')}</Link>
-                            </li>
-                            <li>
-                                <Link href="https://vristo.sbthemes.com" target="_blank">
-                                    {t('documentation')}
-                                </Link>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                        )}
+                    </div>
+                </div>
             </div>
+
+            {/* Mega Menus */}
+            {buyerOpen && (
+                <div className="absolute top-[70px] left-0 w-full z-40" onMouseEnter={() => closeTimer.current && clearTimeout(closeTimer.current)} onMouseLeave={closeAll}>
+                    <div className="container mx-auto px-5">{renderMegaMenu(buyerMenuItems)}</div>
+                </div>
+            )}
+
+            {tenantOpen && (
+                <div className="absolute top-[70px] left-0 w-full z-40" onMouseEnter={() => closeTimer.current && clearTimeout(closeTimer.current)} onMouseLeave={closeAll}>
+                    <div className="container mx-auto px-5">{renderMegaMenu(tenantsMenuItems)}</div>
+                </div>
+            )}
+
+            {pgOpen && (
+                <div className="absolute top-[70px] left-0 w-full z-40" onMouseEnter={() => closeTimer.current && clearTimeout(closeTimer.current)} onMouseLeave={closeAll}>
+                    <div className="container mx-auto px-5">{renderMegaMenu(pgHostelMenuItems)}</div>
+                </div>
+            )}
         </header>
     );
 };

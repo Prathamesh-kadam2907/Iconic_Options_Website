@@ -15,19 +15,18 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
                 <Overlay />
                 <ScrollToTop />
 
-    
                 <MainContainer>
                     {/* BEGIN SIDEBAR */}
-                    <Sidebar />
+                    <div className="block md:hidden">
+                        <Sidebar />
+                    </div>
                     {/* END SIDEBAR */}
                     <div className="main-content flex min-h-screen flex-col">
                         {/* BEGIN TOP NAVBAR */}
-                        <Header />
-                        {/* END TOP NAVBAR */}
 
-                        {/* BEGIN CONTENT AREA */}
+                        <Header />
+
                         <ContentAnimation>{children}</ContentAnimation>
-                        {/* END CONTENT AREA */}
 
                         {/* BEGIN FOOTER */}
                         <Footer />
