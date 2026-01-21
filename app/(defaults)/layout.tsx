@@ -1,11 +1,13 @@
+
 import ContentAnimation from '@/components/layouts/content-animation';
 import Footer from '@/components/layouts/footer';
 import Header from '@/components/layouts/header';
 import MainContainer from '@/components/layouts/main-container';
 import Overlay from '@/components/layouts/overlay';
 import ScrollToTop from '@/components/layouts/scroll-to-top';
-import Sidebar from '@/components/layouts/sidebar';
+
 import Portals from '@/components/portals';
+import BuilderDashboard from '@/components/Builder/BuilderDashboard';
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -18,7 +20,7 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
                 <MainContainer>
                     {/* BEGIN SIDEBAR */}
                     <div className="block md:hidden">
-                        <Sidebar />
+                       
                     </div>
                     {/* END SIDEBAR */}
                     <div className="main-content flex min-h-screen flex-col">
@@ -26,8 +28,10 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
 
                         <Header />
 
-                        <ContentAnimation>{children}</ContentAnimation>
+                        <BuilderDashboard children={undefined}></BuilderDashboard>
 
+                        {/* <ContentAnimation>{children}</ContentAnimation> */}
+                       
                         {/* BEGIN FOOTER */}
                         <Footer />
                         {/* END FOOTER */}
