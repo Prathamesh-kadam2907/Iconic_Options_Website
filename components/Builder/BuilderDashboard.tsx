@@ -9,7 +9,7 @@
     import Subscription from './Pages/Subscription';
     import PostProperty from '@/components/Builder/Property/PostProperty';
 
-    export default function BuilderDashboard({ children }: { children: React.ReactNode }) {
+    export default function ({ children }: { children: React.ReactNode }) {
         return (
             <div className="relative">
                 <Overlay />
