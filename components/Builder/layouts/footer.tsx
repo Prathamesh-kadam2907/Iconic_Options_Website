@@ -36,7 +36,7 @@ const Footer = () => {
                     </span>
                 ))}
             </div>
-
+{/* 
             <div className="mb-4">
                 <Link
                     href="/builder/dashboard"
@@ -44,7 +44,7 @@ const Footer = () => {
                 >
                     Builder Control Panel
                 </Link>
-            </div>
+            </div> */}
 
             <p className="text-sm text-gray-500">
                 © {new Date().getFullYear()} Iconic Options Technologies Pvt. Ltd.

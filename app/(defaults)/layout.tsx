@@ -28,9 +28,9 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
 
                         <Header />
 
-                        <BuilderDashboard children={undefined}></BuilderDashboard>
+                        <BuilderDashboard children={undefined}></BuilderDashboard><BuilderDashboard children={undefined}></BuilderDashboard><BuilderDashboard children={undefined}></BuilderDashboard>
 
-                        {/* <ContentAnimation>{children}</ContentAnimation> */}
+                        {/* {/* {/* <ContentAnimation>{children}</ContentAn */}imat */}ion> */}
                        
                         {/* BEGIN FOOTER */}
                         <Footer />
