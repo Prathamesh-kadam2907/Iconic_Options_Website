@@ -18,23 +18,24 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
                 <ScrollToTop />
 
                 <MainContainer>
-                    {/* BEGIN SIDEBAR */}
+                    
                     <div className="block md:hidden">
                        
                     </div>
-                    {/* END SIDEBAR */}
+                    
                     <div className="main-content flex min-h-screen flex-col">
-                        {/* BEGIN TOP NAVBAR */}
-
-                        <Header />
-
-                        <BuilderDashboard children={undefined}></BuilderDashboard><BuilderDashboard children={undefined}></BuilderDashboard><BuilderDashboard children={undefined}></BuilderDashboard>
-
-                        {/* {/* {/* <ContentAnimation>{children}</ContentAn */}imat */}ion> */}
                        
-                        {/* BEGIN FOOTER */}
-                        <Footer />
-                        {/* END FOOTER */}
+
+                        {/* <Header />
+
+                        
+
+                        <ContentAnimation>{children}</ContentAnimation>
+                       
+                        
+                        <Footer /> */}
+                        <BuilderDashboard></BuilderDashboard>
+                       
                         <Portals />
                     </div>
                 </MainContainer>

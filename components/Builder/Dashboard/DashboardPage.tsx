@@ -118,8 +118,7 @@ export default function DashboardPage() {
             status: 'Live',
             leads: 15,
             visits: 8,
-            image: "https://www.panchshilgroup.com/assets/images/blogs/how-trusted-real-estate-developers-ensure-quality-and-value.webp"
-
+            image: 'https://www.panchshilgroup.com/assets/images/blogs/how-trusted-real-estate-developers-ensure-quality-and-value.webp',
         },
         {
             id: 2,
@@ -130,7 +129,7 @@ export default function DashboardPage() {
             status: 'Live',
             leads: 12,
             visits: 5,
-            image: "https://blog.ipleaders.in/wp-content/uploads/2020/12/Gurugram-to-have-the-first-Indo-Japanese-real-estate-project-Krisumi-Waterfall-Residences-FB-1200x725-compressed.jpg"
+            image: 'https://blog.ipleaders.in/wp-content/uploads/2020/12/Gurugram-to-have-the-first-Indo-Japanese-real-estate-project-Krisumi-Waterfall-Residences-FB-1200x725-compressed.jpg',
         },
         {
             id: 3,
@@ -141,8 +140,7 @@ export default function DashboardPage() {
             status: 'Live',
             leads: 21,
             visits: 10,
-             image:"https://mrhmfl.co.in/images/gallery/construction_finance_to_real_estate_developers.jpg"
-            
+            image: 'https://mrhmfl.co.in/images/gallery/construction_finance_to_real_estate_developers.jpg',
         },
         {
             id: 4,
@@ -153,7 +151,7 @@ export default function DashboardPage() {
             status: 'Draft',
             leads: 0,
             visits: 0,
-             image:"https://www.karmaagroup.com/wp-content/uploads/2017/08/Karmaa-Pinnacle-1-e1517820000223-800x400.jpg"
+            image: 'https://www.karmaagroup.com/wp-content/uploads/2017/08/Karmaa-Pinnacle-1-e1517820000223-800x400.jpg',
         },
     ];
 
@@ -241,8 +239,7 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-white">
-            {/* Main Content */}
-            <main className="max-w-[1400px] mx-auto px-0 sm:px-6 lg:px-8 py-0 space-y-6">
+            <div className="mx-auto px-0 sm:px-6 lg:px-8 py-0 space-y-6">
                 {/* Welcome Section */}
                 <div className="bg-white rounded-2xl shadow-sm p-6 border">
                     <h1 className="text-2xl md:text-2xl font-semibold text-black">Hi Prathamesh, Welcome to your Dashboard</h1>
@@ -302,7 +299,6 @@ export default function DashboardPage() {
                                 <div className="flex flex-wrap gap-3 mt-4">
                                     <button className="px-4 py-1.5 border border-gray-500 text-black rounded-full text-sm hover:bg-red-50 font-medium transition">Edit Property</button>
                                     <button className="px-4 py-1.5 border border-gray-500 text-black rounded-full text-sm hover:bg-red-50 font-medium transition">Refresh</button>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -366,67 +362,53 @@ export default function DashboardPage() {
                                 </div>
 
                                 <div className="space-y-4">
-    {properties.map((property) => (
-        <div
-            key={property.id}
-            className="border rounded-2xl shadow-sm p-4 hover:shadow-md transition bg-white"
-        >
-            <div className="flex flex-col sm:flex-row gap-5">
+                                    {properties.map((property) => (
+                                        <div key={property.id} className="border rounded-2xl shadow-sm p-4 hover:shadow-md transition bg-white">
+                                            <div className="flex flex-col sm:flex-row gap-5">
+                                                {/* Image */}
+                                                <div className="w-full sm:w-36 h-28 rounded-lg border overflow-hidden shrink-0">
+                                                    <img src={property.image} alt={property.name} className="w-full h-full object-cover" />
+                                                </div>
 
-                {/* Image */}
-                <div className="w-full sm:w-36 h-28 rounded-lg border overflow-hidden shrink-0">
-                    <img
-                        src={property.image}
-                        alt={property.name}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
+                                                {/* Details */}
+                                                <div className="flex-1">
+                                                    <div className="flex items-center justify-between flex-wrap gap-2">
+                                                        <h3 className="text-base sm:text-lg font-semibold text-black">{property.name}</h3>
 
-                {/* Details */}
-                <div className="flex-1">
-                    <div className="flex items-center justify-between flex-wrap gap-2">
-                        <h3 className="text-base sm:text-lg font-semibold text-black">
-                            {property.name}
-                        </h3>
+                                                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(property.status)}`}>{property.status}</span>
+                                                    </div>
 
-                        <span
-                            className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(property.status)}`}
-                        >
-                            {property.status}
-                        </span>
-                    </div>
+                                                    <p className="text-sm text-gray-500 mt-1">
+                                                        {property.area} · {property.location}
+                                                    </p>
 
-                    <p className="text-sm text-gray-500 mt-1">
-                        {property.area} · {property.location}
-                    </p>
+                                                    <p className="text-sm text-gray-600 mt-1">{property.type}</p>
 
-                    <p className="text-sm text-gray-600 mt-1">
-                        {property.type}
-                    </p>
+                                                    <div className="flex flex-wrap gap-6 text-sm mt-3">
+                                                        <span>
+                                                            Leads: <b className="text-teal-600">{property.leads}</b>
+                                                        </span>
+                                                        <span>
+                                                            Visits: <b className="text-teal-600">{property.visits}</b>
+                                                        </span>
+                                                    </div>
 
-                    <div className="flex flex-wrap gap-6 text-sm mt-3">
-                        <span>Leads: <b className="text-teal-600">{property.leads}</b></span>
-                        <span>Visits: <b className="text-teal-600">{property.visits}</b></span>
-                    </div>
+                                                    <div className="flex flex-wrap gap-3 mt-4">
+                                                        <button className="px-4 py-1.5 border border-gray-400 rounded-full text-sm font-medium hover:bg-gray-100">
+                                                            <FontAwesomeIcon icon={faPenToSquare} className="mr-1" />
+                                                            Edit
+                                                        </button>
 
-                    <div className="flex flex-wrap gap-3 mt-4">
-                        <button className="px-4 py-1.5 border border-gray-400 rounded-full text-sm font-medium hover:bg-gray-100">
-                            <FontAwesomeIcon icon={faPenToSquare} className="mr-1" />
-                            Edit
-                        </button>
-
-                        <button className="px-4 py-1.5 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700">
-                            <FontAwesomeIcon icon={faEye} className="mr-1" />
-                            View Details
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    ))}
-</div>
-
+                                                        <button className="px-4 py-1.5 bg-teal-600 text-white rounded-full text-sm font-medium hover:bg-teal-700">
+                                                            <FontAwesomeIcon icon={faEye} className="mr-1" />
+                                                            View Details
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
 
@@ -525,8 +507,7 @@ export default function DashboardPage() {
                 )}
 
                 {/* Property Card Section */}
-                
-            </main>
+            </div>
         </div>
     );
 }
