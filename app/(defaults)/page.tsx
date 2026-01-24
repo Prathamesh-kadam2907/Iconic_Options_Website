@@ -1,13 +1,13 @@
-import ComponentsDashboardSales from '@/components/dashboard/components-dashboard-sales';
+import Home from '@/components/components/HomePage/Home';
 import { Metadata } from 'next';
 import React from 'react';
 
 export const metadata: Metadata = {
-    title: 'Sales Admin',
+    title: 'Iconic Options',
 };
 
-const Sales = () => {
-    return <ComponentsDashboardSales />;
+const page = () => {
+    return <Home />;
 };
 
-export default Sales;
+export default page;
