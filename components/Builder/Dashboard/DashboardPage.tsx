@@ -247,20 +247,47 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {stats.map((stat, index) => (
-                        <div key={index} className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all p-5 border">
-                            <div className="flex items-start gap-3 mb-3">
-                                <div className={`w-10 h-10 rounded-full ${stat.bgColor} flex items-center justify-center`}>
-                                    <FontAwesomeIcon icon={stat.icon} className={`${stat.color}`} />
-                                </div>
-                            </div>
-                            <h3 className="text-3xl font-bold text-black mb-1">{stat.value}</h3>
-                            <p className="text-sm text-black font-medium mb-1">{stat.label}</p>
-                            <p className="text-xs text-gray-500">{stat.change}</p>
-                        </div>
-                    ))}
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    {stats.map((stat, index) => (
+        <div 
+            key={index} 
+            className="bg-gradient-to-br from-white to-gray-50 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-4 sm:p-5 border border-gray-200 hover:border-teal-300 group"
+        >
+            {/* Icon with background effect */}
+            <div className="relative mb-3 sm:mb-4">
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${stat.bgColor} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                    <FontAwesomeIcon 
+                        icon={stat.icon} 
+                        className={`${stat.color} text-base sm:text-lg`} 
+                    />
                 </div>
+                {/* Glow effect on hover */}
+                <div className={`absolute inset-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full ${stat.bgColor} blur-sm opacity-0 group-hover:opacity-40 transition-opacity duration-300`}></div>
+            </div>
+
+            {/* Stats Value - Larger on mobile */}
+            <h3 className="text-2xl sm:text-3xl md:text-3xl font-bold text-black mb-1 sm:mb-2 leading-tight">
+                {stat.value}
+            </h3>
+
+            {/* Label - Better spacing */}
+            <p className="text-sm sm:text-base font-semibold text-black mb-1 sm:mb-2 line-clamp-1">
+                {stat.label}
+            </p>
+
+            {/* Change indicator - Better visual hierarchy */}
+            <div className="flex items-center gap-1 sm:gap-2">
+                <span className="text-xs sm:text-sm text-gray-600 font-medium">
+                    {stat.change}
+                </span>
+                <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${stat.change.includes('+') ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+            </div>
+
+            {/* Bottom border effect on hover */}
+            <div className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-transparent via-teal-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+    ))}
+</div>
 
                 {/* Top Stats - Property and Response Cards */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -349,7 +376,8 @@ export default function DashboardPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Properties List */}
                         <div className="lg:col-span-2 space-y-4">
-                            <div className="bg-white rounded-2xl shadow-sm border p-2">
+                           <div className="bg-white rounded-2xl shadow-sm border-0 sm:border p-0 sm:p-2">
+
                                 <div className="flex items-center justify-between mb-5">
                                     <h2 className="text-lg font-semibold text-black">Projects </h2>
                                     {/* <button
@@ -414,7 +442,7 @@ export default function DashboardPage() {
 
                         {/* Upcoming Site Visits Sidebar */}
                         <div className="space-y-4">
-                            <div className="bg-white rounded-2xl shadow-sm border p-2">
+                            <div className="bg-white rounded-2xl shadow-sm border-0 sm:border p-0 sm:p-2">
                                 <h2 className="text-lg font-semibold text-black mb-5">Upcoming Site Visits</h2>
                                 <div className="space-y-3">
                                     {upcomingSiteVisits.map((visit) => (
