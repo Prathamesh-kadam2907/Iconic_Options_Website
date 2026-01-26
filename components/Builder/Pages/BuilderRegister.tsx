@@ -328,7 +328,7 @@ const BuilderRegister: React.FC = () => {
                                         name="mobile"
                                         value={formData.mobile}
                                         onChange={handleChange}
-                                        placeholder="9876543210"
+                                        placeholder="98xxxxxx10"
                                         className={`w-full pl-9 pr-3 py-2.5 text-sm border rounded-lg outline-none transition-all duration-200 ${
                                             errors.mobile ? 'border-red-500' : 'border-gray-300 focus:border-purple-500'
                                         }`}

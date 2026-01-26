@@ -349,7 +349,7 @@ export default function DashboardPage() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         {/* Properties List */}
                         <div className="lg:col-span-2 space-y-4">
-                            <div className="bg-white rounded-2xl shadow-sm border p-6">
+                            <div className="bg-white rounded-2xl shadow-sm border p-2">
                                 <div className="flex items-center justify-between mb-5">
                                     <h2 className="text-lg font-semibold text-black">Projects </h2>
                                     {/* <button
@@ -414,11 +414,11 @@ export default function DashboardPage() {
 
                         {/* Upcoming Site Visits Sidebar */}
                         <div className="space-y-4">
-                            <div className="bg-white rounded-2xl shadow-sm border p-6">
+                            <div className="bg-white rounded-2xl shadow-sm border p-2">
                                 <h2 className="text-lg font-semibold text-black mb-5">Upcoming Site Visits</h2>
                                 <div className="space-y-3">
                                     {upcomingSiteVisits.map((visit) => (
-                                        <div key={visit.id} className="bg-white border rounded-2xl shadow-sm p-5 hover:shadow-md transition">
+                                        <div key={visit.id} className="bg-white border rounded-2xl shadow-sm p-2 hover:shadow-md transition">
                                             <div className="flex items-center gap-3 mb-3">
                                                 <div className="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center text-teal-600">
                                                     <FontAwesomeIcon icon={faCalendar} />
