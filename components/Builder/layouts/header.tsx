@@ -31,15 +31,11 @@ const Header = () => {
     const [user, setUser] = useState<any>(null);
 
     useEffect(() => {
-        // Load user from localStorage or your auth system
-        const loadUser = () => {
-            const userData = localStorage.getItem('user');
-            if (userData) {
-                setUser(JSON.parse(userData));
-            }
-        };
-        loadUser();
-    }, []);
+    const userData = localStorage.getItem('currentBuilder');
+    setUser(userData ? JSON.parse(userData) : null);
+}, [pathname]); // ⭐ runs every route change
+
+
 
     useEffect(() => {
         const handler = (e: MouseEvent) => {
@@ -283,7 +279,7 @@ const Header = () => {
 
                             {user && (
                                 <button
-                                    onClick={() => router.push('/subscription')}
+                                    onClick={() => router.push('/Builder/BuilderSubscription')}
                                     className="w-full bg-emerald-500 text-white py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-emerald-600 transition-colors"
                                 >
                                     My Plans
@@ -372,7 +368,7 @@ const Header = () => {
                                     </div>
                                     <div
                                         onClick={() => {
-                                            localStorage.removeItem('user');
+                                            localStorage.removeItem('currentBuilder');
                                             setUser(null);
                                             router.push('/');
                                             setUserMenuOpen(false);

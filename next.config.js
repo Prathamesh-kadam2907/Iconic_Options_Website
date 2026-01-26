@@ -8,5 +8,9 @@ const nextConfig = {
     typescript: {
         ignoreBuildErrors: true, // Add this line
     },
+    images: {
+  domains: ['images.unsplash.com'],
+}
+
 };
 module.exports = nextConfig;

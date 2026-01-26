@@ -677,35 +677,57 @@ const BuilderRegister: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-white px-4 sm:px-6 lg:px-8 xl:px-0  py-8 sm:py-10 lg:py-14 xl:py-20 ">
-            <div className="w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl mx-auto px-4 ">
+       <div className="min-h-screen bg-gray-50 py-10">
+
+            <div className="w-full max-w-6xl mx-auto px-4 sm:px-28 lg:px-48 xl:px-88">
+
                 <div className="text-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-800 mb-2">Builder Registration</h1>
                     <p className="text-gray-600">Complete the steps below to join our builder network</p>
                 </div>
 
-                {/* Stepper */}
+              
                 <div className="mb-8">
-                    <div className="flex items-center justify-between relative gap-6 lg:gap-10">
-                        <div className="absolute top-[27%] left-0 right-0 h-0.5 bg-gray-200 -translate-y-1/2 z-0"></div>
-                        {steps.map((step, index) => (
-                            <div key={step.id} className="flex flex-col items-center relative z-10">
-                                <button
-                                    onClick={() => setCurrentStep(step.id)}
-                                    className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 transition-all duration-300 ${
-                                        currentStep >= step.id ? 'bg-purple-600 text-white shadow-lg' : 'bg-white border-2 border-gray-300 text-gray-400'
-                                    } ${currentStep === step.id ? 'ring-4 ring-purple-200' : ''}`}
-                                >
-                                    {currentStep > step.id ? <FontAwesomeIcon icon={faCheckCircle} /> : step.icon}
-                                </button>
-                                <div className="text-center">
-                                    <p className={`text-xs font-medium ${currentStep >= step.id ? 'text-purple-600' : 'text-gray-500'}`}>Step {step.id}</p>
-                                    <p className={`text-sm font-semibold hidden md:block ${currentStep >= step.id ? 'text-gray-800' : 'text-gray-400'}`}>{step.title}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+  <div className="relative overflow-x-auto">
+    
+    {/* line */}
+    <div className="absolute top-6 left-0 right-0 h-0.5 bg-gray-200"></div>
+
+    <div className="flex items-center gap-6 lg:gap-10 min-w-max px-2">
+      {steps.map((step) => (
+        <div key={step.id} className="flex flex-col items-center relative z-10 shrink-0">
+          
+          <button
+            onClick={() => setCurrentStep(step.id)}
+            className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 transition-all duration-300 ${
+              currentStep >= step.id
+                ? 'bg-purple-600 text-white shadow-lg'
+                : 'bg-white border-2 border-gray-300 text-gray-400'
+            } ${currentStep === step.id ? 'ring-4 ring-purple-200' : ''}`}
+          >
+            {currentStep > step.id ? (
+              <FontAwesomeIcon icon={faCheckCircle} />
+            ) : (
+              step.icon
+            )}
+          </button>
+
+          <div className="text-center">
+            <p className={`text-xs font-medium ${currentStep >= step.id ? 'text-purple-600' : 'text-gray-500'}`}>
+              Step {step.id}
+            </p>
+
+            {/* hide title on mobile */}
+            <p className={`text-sm font-semibold hidden sm:block ${currentStep >= step.id ? 'text-gray-800' : 'text-gray-400'}`}>
+              {step.title}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
 
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden mx-auto">
                     {/* Step header */}
