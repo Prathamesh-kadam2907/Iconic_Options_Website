@@ -157,9 +157,9 @@ const Header = () => {
                             <button onClick={() => setMobileUserMenuOpen(true)} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                                 <img src={user.photo || '/assets/images/user-profile.jpeg'} className="w-8 h-8 rounded-full border-2 border-gray-200" alt="User" />
                             </button>
-                            <button className="text-2xl text-gray-700" onClick={() => setSidebarMenuOpen(true)}>
+                            {/* <button className="text-2xl text-gray-700" onClick={() => setSidebarMenuOpen(true)}>
                                 <FontAwesomeIcon icon={faBars} />
-                            </button>
+                            </button> */}
                         </>
                     ) : (
                         <>
