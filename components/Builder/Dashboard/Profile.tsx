@@ -67,8 +67,7 @@ export default function Profile() {
         { icon: faUser, label: 'Profile Details' },
         { icon: faEdit, label: 'Edit Login Details' },
         { icon: faLock, label: 'Change Password' },
-        { icon: faMessage, label: 'Saved Messages' },
-        { icon: faCog, label: 'Account Settings' },
+       
     ];
 
     const handleEditLoginChange = (field: string, value: string) => {
@@ -100,10 +99,7 @@ export default function Profile() {
                 return renderEditLoginDetails();
             case 'Change Password':
                 return renderChangePassword();
-            case 'Saved Messages':
-                return renderSavedMessages();
-            case 'Account Settings':
-                return renderAccountSettings();
+            
             default:
                 return renderProfileDetails();
         }
@@ -236,46 +232,7 @@ export default function Profile() {
                     </div>
                 </div>
 
-                {/* Additional Information Section */}
-                <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-gray-200">
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 sm:mb-6">
-                        Additional Information
-                    </h3>
-                    
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                        <div className="bg-gradient-to-br from-gray-50 to-white rounded-lg sm:rounded-xl border border-gray-200 p-4 sm:p-5 hover:border-teal-300 transition-colors">
-                            <div className="flex items-start gap-3 sm:gap-4">
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-r from-teal-100 to-teal-50 flex items-center justify-center flex-shrink-0">
-                                    <FontAwesomeIcon icon={faCog} className="text-teal-600 text-base sm:text-lg" />
-                                </div>
-                                <div className="min-w-0">
-                                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base mb-1">
-                                        Account Settings
-                                    </h4>
-                                    <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
-                                        Manage notification preferences and privacy settings
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div className="bg-gradient-to-br from-gray-50 to-white rounded-lg sm:rounded-xl border border-gray-200 p-4 sm:p-5 hover:border-teal-300 transition-colors">
-                            <div className="flex items-start gap-3 sm:gap-4">
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gradient-to-r from-blue-100 to-blue-50 flex items-center justify-center flex-shrink-0">
-                                    <FontAwesomeIcon icon={faMoneyBillWave} className="text-blue-600 text-base sm:text-lg" />
-                                </div>
-                                <div className="min-w-0">
-                                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base mb-1">
-                                        Earn Commissions
-                                    </h4>
-                                    <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
-                                        Refer customers and earn home loan commissions
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
 
                 {/* Action Buttons - Responsive */}
                 <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
@@ -669,42 +626,7 @@ export default function Profile() {
         </div>
     );
 
-    const renderSavedMessages = () => (
-        <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl sm:rounded-2xl border border-gray-200 p-4 sm:p-6 md:p-8 shadow-sm">
-            <div className="mb-6 sm:mb-8">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-black mb-1 sm:mb-2">
-                    Saved Messages
-                </h2>
-                <p className="text-gray-800 text-sm sm:text-base md:text-lg">
-                    View and manage your saved conversations
-                </p>
-            </div>
-            <div className="text-center py-12">
-                <FontAwesomeIcon icon={faMessage} className="text-4xl text-gray-300 mb-4" />
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">No Saved Messages</h3>
-                <p className="text-gray-500">Your saved messages will appear here</p>
-            </div>
-        </div>
-    );
-
-    const renderAccountSettings = () => (
-        <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl sm:rounded-2xl border border-gray-200 p-4 sm:p-6 md:p-8 shadow-sm">
-            <div className="mb-6 sm:mb-8">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-black mb-1 sm:mb-2">
-                    Account Settings
-                </h2>
-                <p className="text-gray-800 text-sm sm:text-base md:text-lg">
-                    Manage your account preferences and settings
-                </p>
-            </div>
-            <div className="text-center py-12">
-                <FontAwesomeIcon icon={faCog} className="text-4xl text-gray-300 mb-4" />
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">Account Settings</h3>
-                <p className="text-gray-500">Account settings page will be implemented here</p>
-            </div>
-        </div>
-    );
-
+    
     return (
         <div className="min-h-screen bg-gradient-to-br from-white to-teal-50/30">
             <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">

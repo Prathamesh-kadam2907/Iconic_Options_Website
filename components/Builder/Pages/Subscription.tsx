@@ -2,173 +2,383 @@
 
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faTimesCircle, faStar } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faCheckCircle, 
+    faTimesCircle, 
+    faStar, 
+    faCrown, 
+    faGem, 
+    faRocket, 
+    faBolt, 
+    faFire, 
+    faPercent,
+    faCalendarDays,
+    faEnvelope,
+    faEye,
+    faUsers,
+    faArrowRight,
+    faCheck
+} from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 
 interface Plan {
     name: string;
     price: string;
     oldPrice?: string;
-    highlight?: boolean;
+    discount?: string;
+    icon: any;
+    gradient: string;
     badge?: string;
-    features: (string | boolean)[];
+    badgeColor?: string;
+    features: {
+        label: string;
+        value: string | boolean;
+        icon: any;
+    }[];
+    buttonText: string;
+    buttonColor: string;
 }
 
 const Subscription = () => {
     const router = useRouter();
-    const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
+    const [selectedPlan, setSelectedPlan] = useState<number | null>(1); // Default select GOLD plan
 
     const plans: Plan[] = [
         {
             name: 'FREE',
             price: '₹0',
-            badge: 'Currently Active',
-            features: ['Upto 2 Enquiries', false, '17% Visibility', false, false, 'Limited Validity', false],
+            icon: faUsers,
+            gradient: 'from-gray-100 to-gray-200',
+            badge: 'Current Plan',
+            badgeColor: 'bg-gray-500',
+            features: [
+                { label: 'Enquiries', value: 'Upto 2', icon: faUsers },
+                { label: 'Boost Days', value: false, icon: faRocket },
+                { label: 'Visibility', value: '17%', icon: faEye },
+                { label: 'Premium Badge', value: false, icon: faStar },
+                { label: 'Email Notifications', value: false, icon: faEnvelope },
+                { label: 'Validity', value: 'Limited', icon: faCalendarDays },
+                { label: 'Phone Support', value: false, icon: faBolt },
+            ],
+            buttonText: 'Continue Free',
+            buttonColor: 'border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50',
         },
         {
             name: 'GOLD',
-            price: '₹2479',
-            oldPrice: '₹6198',
-            highlight: true,
+            price: '₹2,479',
+            oldPrice: '₹6,198',
+            discount: '60% OFF',
+            icon: faCrown,
+            gradient: 'from-amber-50 to-yellow-50',
             badge: 'Most Popular',
-            features: ['Upto 30 Enquiries', '8 Days Boost', '90% Visibility', true, false, '90 Days Validity', true],
+            badgeColor: 'bg-gradient-to-r from-amber-500 to-yellow-500',
+            features: [
+                { label: 'Enquiries', value: 'Upto 30', icon: faUsers },
+                { label: 'Boost Days', value: '8 Days', icon: faRocket },
+                { label: 'Visibility', value: '90%', icon: faEye },
+                { label: 'Premium Badge', value: true, icon: faStar },
+                { label: 'Email Notifications', value: false, icon: faEnvelope },
+                { label: 'Validity', value: '90 Days', icon: faCalendarDays },
+                { label: 'Phone Support', value: true, icon: faBolt },
+            ],
+            buttonText: 'Upgrade to Gold',
+            buttonColor: 'bg-gradient-to-r from-amber-500 to-yellow-500 text-white hover:from-amber-600 hover:to-yellow-600',
         },
         {
             name: 'DIAMOND',
-            price: '₹3235',
-            oldPrice: '₹8088',
-            features: ['Upto 40 Enquiries', '10 Days Boost', '92% Visibility', true, '500 Emails', '120 Days Validity', true],
+            price: '₹3,235',
+            oldPrice: '₹8,088',
+            discount: '60% OFF',
+            icon: faGem,
+            gradient: 'from-blue-50 to-indigo-50',
+            badge: 'Best Value',
+            badgeColor: 'bg-gradient-to-r from-blue-500 to-indigo-500',
+            features: [
+                { label: 'Enquiries', value: 'Upto 40', icon: faUsers },
+                { label: 'Boost Days', value: '10 Days', icon: faRocket },
+                { label: 'Visibility', value: '92%', icon: faEye },
+                { label: 'Premium Badge', value: true, icon: faStar },
+                { label: 'Email Notifications', value: '500 Emails', icon: faEnvelope },
+                { label: 'Validity', value: '120 Days', icon: faCalendarDays },
+                { label: 'Phone Support', value: true, icon: faBolt },
+            ],
+            buttonText: 'Choose Diamond',
+            buttonColor: 'bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:from-blue-600 hover:to-indigo-600',
         },
         {
             name: 'TITANIUM',
-            price: '₹3691',
-            oldPrice: '₹9232',
-            features: ['Upto 50 Enquiries', '50 Days Boost', '98% Visibility', true, '1000 Emails', '180 Days Validity', true],
+            price: '₹3,691',
+            oldPrice: '₹9,232',
+            discount: '60% OFF',
+            icon: faFire,
+            gradient: 'from-purple-50 to-pink-50',
+            badge: 'Premium',
+            badgeColor: 'bg-gradient-to-r from-purple-500 to-pink-500',
+            features: [
+                { label: 'Enquiries', value: 'Upto 50', icon: faUsers },
+                { label: 'Boost Days', value: '50 Days', icon: faRocket },
+                { label: 'Visibility', value: '98%', icon: faEye },
+                { label: 'Premium Badge', value: true, icon: faStar },
+                { label: 'Email Notifications', value: '1000 Emails', icon: faEnvelope },
+                { label: 'Validity', value: '180 Days', icon: faCalendarDays },
+                { label: 'Phone Support', value: true, icon: faBolt },
+            ],
+            buttonText: 'Go Premium',
+            buttonColor: 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600',
         },
     ];
 
-    const renderFeature = (feature: any) => {
-        if (feature === true) return <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-lg" />;
-
-        if (feature === false) return <FontAwesomeIcon icon={faTimesCircle} className="text-red-400 text-lg" />;
-
-        return <span className="text-sm text-gray-700">{feature}</span>;
+    const renderFeatureValue = (value: string | boolean) => {
+        if (value === true) {
+            return (
+                <div className="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full">
+                    <FontAwesomeIcon icon={faCheck} className="text-green-600 text-sm" />
+                </div>
+            );
+        }
+        if (value === false) {
+            return (
+                <div className="flex items-center justify-center w-8 h-8 bg-red-100 rounded-full">
+                    <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-sm" />
+                </div>
+            );
+        }
+        return <span className="text-lg font-bold text-gray-900">{value}</span>;
     };
 
     const handleCardClick = (index: number) => {
         setSelectedPlan(index);
     };
 
-    return (
-        <div className="min-h-screen bg-white py-10 lg:py-16 px-4 border border-gray-200 hover:border-gray-600 transition-colors duration-300">
-            <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="text-center mb-12">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 mb-3">Buyers are unable to notice your Property</h1>
+    const handleBuyNow = (planName: string) => {
+        // Handle purchase logic here
+        console.log(`Purchasing ${planName} plan`);
+        router.push('/payment');
+    };
 
-                    <p className="text-gray-600 text-sm md:text-base">
-                        Speak to buyers directly & <span className="text-teal-600 font-semibold">Pay No Brokerage</span>
+    return (
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+                {/* Header Section */}
+                <div className="text-center mb-10 lg:mb-16">
+                    <div className="inline-block bg-gradient-to-r from-teal-50 to-emerald-50 rounded-full px-6 py-2 mb-4 border border-teal-100">
+                        <span className="text-teal-700 font-semibold text-sm">✨ NO BROKERAGE</span>
+                    </div>
+                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                        <span className="bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
+                            Get More Visibility
+                        </span>
+                        <br />
+                        <span className="text-gray-800">For Your Properties</span>
+                    </h1>
+                    <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
+                        Speak directly to genuine buyers & close deals faster. Choose the perfect plan for your business growth.
                     </p>
                 </div>
 
-                {/* Pricing Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 md:gap-8">
+                {/* Comparison Table Header (Desktop) */}
+                <div className="hidden lg:grid grid-cols-4 gap-6 mb-2 px-6">
                     {plans.map((plan, index) => (
-                        <div
-                            key={index}
-                            onClick={() => handleCardClick(index)}
-                            className={`relative bg-white rounded-2xl border-2 p-6 flex flex-col text-center transition-all duration-300 cursor-pointer
-              ${selectedPlan === index ? 'border-teal-500 shadow-2xl scale-[1.02] ring-4 ring-teal-100' : 'border-gray-200'}
-              hover:scale-[1.01] hover:border-gray-500 group`}
-                        >
-                            {/* Selection Indicator */}
-                            {selectedPlan === index && (
-                                <div className="absolute -top-2 -right-2 w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
-                                    <FontAwesomeIcon icon={faCheckCircle} className="text-white text-sm" />
-                                </div>
-                            )}
-
-                            {/* Badge */}
-                            {plan.badge && (
-                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-teal-500 text-white text-xs px-3 py-1 rounded-full flex items-center gap-1 transition-all duration-300 group-hover:scale-105">
-                                    <FontAwesomeIcon icon={faStar} />
-                                    {plan.badge}
-                                </div>
-                            )}
-
-                            {/* Name */}
-                            <h2
-                                className={`text-xl font-bold mt-2 mb-1 transition-colors duration-300
-                ${selectedPlan === index ? 'text-teal-600' : 'text-gray-900'}`}
-                            >
+                        <div key={index} className="text-center">
+                            <h3 className={`text-xl font-bold ${index === 0 ? 'text-gray-700' : 'text-gray-900'}`}>
                                 {plan.name}
-                            </h2>
-
-                            {/* Price */}
-                            <div className="my-5">
-                                {plan.oldPrice && <p className="line-through text-gray-400 text-sm mb-1">{plan.oldPrice}</p>}
-                                <p
-                                    className={`text-4xl font-bold transition-colors duration-300
-                  ${selectedPlan === index ? 'text-teal-700' : 'text-gray-900'}`}
-                                >
-                                    {plan.price}
-                                    <span className="text-sm font-normal text-gray-500">/plan</span>
-                                </p>
-                            </div>
-
-                            {/* Divider */}
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-2"></div>
-
-                            {/* Features */}
-                            <div className="flex-1 space-y-4 mb-6 mt-4">
-                                {plan.features.map((feature, i) => (
-                                    <div key={i} className="flex justify-center transition-transform duration-300 hover:scale-105">
-                                        {renderFeature(feature)}
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Button */}
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    router.push('/payment');
-                                }}
-                                className={`w-full py-3 rounded-lg font-semibold transition-all duration-300 mt-4 border-2
-                ${
-                    plan.name === 'FREE'
-                        ? 'border-gray-300 text-gray-700 hover:border-teal-600 hover:text-teal-700 hover:bg-teal-50'
-                        : 'bg-teal-500 text-white border-teal-500 hover:bg-teal-600 hover:border-teal-600'
-                }`}
-                            >
-                                {plan.name === 'FREE' ? 'Continue Free' : 'Buy Now'}
-                            </button>
+                            </h3>
                         </div>
                     ))}
                 </div>
 
-                {/* Selected Plan Info (Visible only when a plan is selected) */}
-                {selectedPlan !== null && (
-                    <div className="mt-8 max-w-2xl mx-auto p-6 bg-gradient-to-r from-teal-50 to-teal-100 rounded-2xl border border-teal-200 animate-fadeIn">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h3 className="text-lg font-semibold text-gray-800">
-                                    Selected Plan: <span className="text-teal-600">{plans[selectedPlan].name}</span>
-                                </h3>
-                                <p className="text-gray-600 text-sm mt-1">Click "Buy Now" to proceed with the {plans[selectedPlan].name} plan</p>
+                {/* Main Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-4">
+                    {plans.map((plan, index) => (
+                        <div
+                            key={index}
+                            onClick={() => handleCardClick(index)}
+                            className={`relative bg-white rounded-2xl border-2 transition-all duration-300 cursor-pointer overflow-hidden group
+                                ${selectedPlan === index 
+                                    ? 'border-teal-500 shadow-2xl transform lg:scale-105' 
+                                    : 'border-gray-200 hover:border-gray-300 hover:shadow-xl'
+                                }`}
+                        >
+                            {/* Top Gradient Bar */}
+                            <div className={`h-2 ${plan.gradient}`}></div>
+
+                            {/* Badge */}
+                            {plan.badge && (
+                                <div className={`absolute top-3 left-1/2 -translate-x-1/2 ${plan.badgeColor} text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg z-10 whitespace-nowrap`}>
+                                    {plan.badge}
+                                </div>
+                            )}
+
+                            {/* Content Container */}
+                            <div className="p-5 sm:p-6 lg:p-5 xl:p-6">
+                                {/* Plan Header */}
+                                <div className="text-center mb-6">
+                                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 ${plan.gradient}`}>
+                                        <FontAwesomeIcon 
+                                            icon={plan.icon} 
+                                            className={index === 0 ? 'text-gray-600' : 'text-gray-700'} 
+                                            size="lg"
+                                        />
+                                    </div>
+                                    
+                                    <h2 className={`text-xl sm:text-2xl font-bold mb-2 ${selectedPlan === index ? 'text-teal-700' : 'text-gray-900'}`}>
+                                        {plan.name}
+                                    </h2>
+
+                                    {/* Price Section */}
+                                    <div className="mb-4">
+                                        {plan.oldPrice && (
+                                            <div className="flex items-center justify-center gap-2 mb-1">
+                                                <span className="text-gray-400 line-through text-sm">{plan.oldPrice}</span>
+                                                {plan.discount && (
+                                                    <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded">
+                                                        {plan.discount}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        )}
+                                        <div className="flex items-baseline justify-center">
+                                            <span className={`text-3xl sm:text-4xl font-bold ${selectedPlan === index ? 'text-teal-800' : 'text-gray-900'}`}>
+                                                {plan.price}
+                                            </span>
+                                            <span className="text-gray-500 text-sm ml-1">/plan</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Divider */}
+                                    <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-4"></div>
+                                </div>
+
+                                {/* Features List */}
+                                <div className="space-y-3 sm:space-y-4 mb-6">
+                                    {plan.features.map((feature, i) => (
+                                        <div key={i} className="flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <FontAwesomeIcon 
+                                                    icon={feature.icon} 
+                                                    className="text-gray-400 text-sm" 
+                                                />
+                                                <span className="text-sm text-gray-600">{feature.label}</span>
+                                            </div>
+                                            <div className="text-right">
+                                                {renderFeatureValue(feature.value)}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Action Button */}
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleBuyNow(plan.name);
+                                    }}
+                                    className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${plan.buttonColor} shadow-md hover:shadow-lg flex items-center justify-center gap-2`}
+                                >
+                                    {plan.buttonText}
+                                    {index !== 0 && (
+                                        <FontAwesomeIcon icon={faArrowRight} className="text-sm" />
+                                    )}
+                                </button>
+
+                                {/* Selection Indicator */}
+                                {selectedPlan === index && (
+                                    <div className="absolute top-4 right-4 w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center animate-pulse">
+                                        <FontAwesomeIcon icon={faCheck} className="text-white text-xs" />
+                                    </div>
+                                )}
                             </div>
-                            <button
-                                onClick={() => setSelectedPlan(null)}
-                                className="px-4 py-2 text-sm text-black hover:text-teal-800 hover:bg-teal-50 rounded-lg transition-colors border border-teal-300"
-                            >
-                                Clear Selection
-                            </button>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Comparison Table (Mobile - Horizontal Scroll) */}
+                <div className="lg:hidden mt-8">
+                    <div className="bg-white rounded-2xl border border-gray-200 p-4">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Feature Comparison</h3>
+                        <div className="overflow-x-auto">
+                            <table className="w-full min-w-max">
+                                <thead>
+                                    <tr className="border-b">
+                                        <th className="text-left py-3 text-sm font-medium text-gray-500">Feature</th>
+                                        {plans.map((plan, index) => (
+                                            <th key={index} className="text-center py-3">
+                                                <div className="text-xs font-semibold text-gray-700">{plan.name}</div>
+                                            </th>
+                                        ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {plans[0].features.map((_, featureIndex) => (
+                                        <tr key={featureIndex} className="border-b last:border-b-0">
+                                            <td className="py-3 text-sm text-gray-600">
+                                                {plans[0].features[featureIndex].label}
+                                            </td>
+                                            {plans.map((plan, planIndex) => (
+                                                <td key={planIndex} className="py-3 text-center">
+                                                    {renderFeatureValue(plan.features[featureIndex].value)}
+                                                </td>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Selected Plan Summary */}
+                {selectedPlan !== null && (
+                    <div className="mt-8 lg:mt-12 max-w-4xl mx-auto">
+                        <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-2xl border border-teal-200 p-6 shadow-lg animate-fadeIn">
+                            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+                                <div className="text-center lg:text-left">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className={`w-10 h-10 rounded-full ${plans[selectedPlan].gradient} flex items-center justify-center`}>
+                                            <FontAwesomeIcon icon={plans[selectedPlan].icon} className="text-gray-700" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-900">
+                                                Selected: <span className="text-teal-700">{plans[selectedPlan].name} Plan</span>
+                                            </h3>
+                                            <p className="text-gray-600 text-sm mt-1">
+                                                {plans[selectedPlan].price} • {plans[selectedPlan].features[5].value} validity
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex flex-col sm:flex-row gap-3">
+                                    <button
+                                        onClick={() => setSelectedPlan(null)}
+                                        className="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                                    >
+                                        Change Plan
+                                    </button>
+                                    <button
+                                        onClick={() => handleBuyNow(plans[selectedPlan].name)}
+                                        className="px-6 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-500 text-white rounded-lg font-semibold hover:from-teal-700 hover:to-emerald-600 transition-all shadow-md flex items-center justify-center gap-2"
+                                    >
+                                        Proceed to Payment
+                                        <FontAwesomeIcon icon={faArrowRight} />
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
+
+                {/* Additional Info */}
+                <div className="mt-8 lg:mt-12 text-center">
+                    <p className="text-gray-500 text-sm">
+                        <span className="font-semibold text-teal-600">Note:</span> All prices include GST. 
+                        7-day money-back guarantee on all paid plans. 
+                        Upgrade or downgrade anytime.
+                    </p>
+                </div>
             </div>
 
-            {/* Add custom styles for animations */}
+            {/* Custom CSS for animations */}
             <style jsx global>{`
                 @keyframes fadeIn {
                     from {
@@ -183,6 +393,25 @@ const Subscription = () => {
 
                 .animate-fadeIn {
                     animation: fadeIn 0.3s ease-out;
+                }
+
+                /* Custom scrollbar for mobile comparison */
+                .overflow-x-auto::-webkit-scrollbar {
+                    height: 6px;
+                }
+
+                .overflow-x-auto::-webkit-scrollbar-track {
+                    background: #f1f1f1;
+                    border-radius: 10px;
+                }
+
+                .overflow-x-auto::-webkit-scrollbar-thumb {
+                    background: #cbd5e1;
+                    border-radius: 10px;
+                }
+
+                .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+                    background: #94a3b8;
                 }
             `}</style>
         </div>
