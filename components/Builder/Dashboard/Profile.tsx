@@ -244,10 +244,10 @@ export default function Profile() {
                         Edit Profile
                     </button>
                     
-                    <button className="px-4 sm:px-6 py-2.5 sm:py-3 border-2 border-gray-300 text-gray-700 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base hover:border-teal-400 hover:text-teal-700 hover:bg-teal-50 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
+                    {/* <button className="px-4 sm:px-6 py-2.5 sm:py-3 border-2 border-gray-300 text-gray-700 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base hover:border-teal-400 hover:text-teal-700 hover:bg-teal-50 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
                         <FontAwesomeIcon icon={faCog} className="text-xs sm:text-sm" />
                         Account Settings
-                    </button>
+                    </button> */}
                     
                     {/* <button className="px-4 sm:px-6 py-2.5 sm:py-3 border-2 border-red-300 text-red-600 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base hover:border-red-400 hover:bg-red-50 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap">
                         <FontAwesomeIcon icon={faLock} className="text-xs sm:text-sm" />
