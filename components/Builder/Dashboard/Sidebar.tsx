@@ -109,7 +109,7 @@ export default function Sidebar() {
             {/* Main Content Area */}
             <main className="flex-1 min-w-0 bg-white overflow-y-auto h-full">
                 {/* Dynamic Content */}
-                <div className="p-4 md:p-6 pb-20 md:pb-6">{ActiveComponent}</div>
+                <div className="p-0 md:p-6 pb-20 md:pb-6">{ActiveComponent}</div>
             </main>
 
             {/* Mobile Bottom Navigation */}
