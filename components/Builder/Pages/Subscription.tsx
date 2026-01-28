@@ -131,19 +131,19 @@ const Subscription = () => {
     const renderFeatureValue = (value: string | boolean) => {
         if (value === true) {
             return (
-                <div className="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full">
-                    <FontAwesomeIcon icon={faCheck} className="text-green-600 text-sm" />
+                <div className="flex items-center justify-center w-7 h-7 bg-green-100 rounded-full">
+                    <FontAwesomeIcon icon={faCheck} className="text-green-600 text-xs" />
                 </div>
             );
         }
         if (value === false) {
             return (
-                <div className="flex items-center justify-center w-8 h-8 bg-red-100 rounded-full">
-                    <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-sm" />
+                <div className="flex items-center justify-center w-7 h-7 bg-red-100 rounded-full">
+                    <FontAwesomeIcon icon={faTimesCircle} className="text-red-500 text-xs" />
                 </div>
             );
         }
-        return <span className="text-lg font-bold text-gray-900">{value}</span>;
+        return <span className="text-base font-semibold text-gray-900">{value}</span>;
     };
 
     const handleCardClick = (index: number) => {
@@ -157,30 +157,28 @@ const Subscription = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-8 lg:py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-6 lg:py-10 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 {/* Header Section */}
-                <div className="text-center mb-10 lg:mb-16">
-                    <div className="inline-block bg-gradient-to-r from-teal-50 to-emerald-50 rounded-full px-6 py-2 mb-4 border border-teal-100">
-                        <span className="text-teal-700 font-semibold text-sm">✨ NO BROKERAGE</span>
-                    </div>
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+                <div className="text-center mb-8 lg:mb-12">
+                    
+                    <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 leading-tight">
                         <span className="bg-gradient-to-r from-teal-600 to-emerald-500 bg-clip-text text-transparent">
                             Get More Visibility
                         </span>
                         <br />
                         <span className="text-gray-800">For Your Properties</span>
                     </h1>
-                    <p className="text-gray-600 text-base sm:text-lg max-w-3xl mx-auto">
+                    <p className="text-gray-600 text-sm sm:text-base max-w-3xl mx-auto leading-relaxed">
                         Speak directly to genuine buyers & close deals faster. Choose the perfect plan for your business growth.
                     </p>
                 </div>
 
                 {/* Comparison Table Header (Desktop) */}
-                <div className="hidden lg:grid grid-cols-4 gap-6 mb-2 px-6">
+                <div className="hidden lg:grid grid-cols-4 gap-4 mb-1 px-4">
                     {plans.map((plan, index) => (
                         <div key={index} className="text-center">
-                            <h3 className={`text-xl font-bold ${index === 0 ? 'text-gray-700' : 'text-gray-900'}`}>
+                            <h3 className={`text-lg font-bold ${index === 0 ? 'text-gray-700' : 'text-gray-900'}`}>
                                 {plan.name}
                             </h3>
                         </div>
@@ -188,77 +186,77 @@ const Subscription = () => {
                 </div>
 
                 {/* Main Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-3">
                     {plans.map((plan, index) => (
                         <div
                             key={index}
                             onClick={() => handleCardClick(index)}
-                            className={`relative bg-white rounded-2xl border-2 transition-all duration-300 cursor-pointer overflow-hidden group
+                            className={`relative bg-white rounded-xl border-2 transition-all duration-300 cursor-pointer overflow-hidden group
                                 ${selectedPlan === index 
-                                    ? 'border-teal-500 shadow-2xl transform lg:scale-105' 
-                                    : 'border-gray-200 hover:border-gray-300 hover:shadow-xl'
+                                    ? 'border-teal-500 shadow-lg transform lg:scale-105' 
+                                    : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
                                 }`}
                         >
                             {/* Top Gradient Bar */}
-                            <div className={`h-2 ${plan.gradient}`}></div>
+                            <div className={`h-1.5 ${plan.gradient}`}></div>
 
                             {/* Badge */}
                             {plan.badge && (
-                                <div className={`absolute top-3 left-1/2 -translate-x-1/2 ${plan.badgeColor} text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg z-10 whitespace-nowrap`}>
+                                <div className={`absolute top-2 left-1/2 -translate-x-1/2 ${plan.badgeColor} text-white text-xs font-bold px-3 py-1 rounded-full shadow z-10 whitespace-nowrap`}>
                                     {plan.badge}
                                 </div>
                             )}
 
                             {/* Content Container */}
-                            <div className="p-5 sm:p-6 lg:p-5 xl:p-6">
+                            <div className="p-4 sm:p-5 lg:p-4">
                                 {/* Plan Header */}
-                                <div className="text-center mb-6">
-                                    <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full mb-3 ${plan.gradient}`}>
+                                <div className="text-center mb-4">
+                                    <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-2 ${plan.gradient}`}>
                                         <FontAwesomeIcon 
                                             icon={plan.icon} 
                                             className={index === 0 ? 'text-gray-600' : 'text-gray-700'} 
-                                            size="lg"
+                                            size="sm"
                                         />
                                     </div>
                                     
-                                    <h2 className={`text-xl sm:text-2xl font-bold mb-2 ${selectedPlan === index ? 'text-teal-700' : 'text-gray-900'}`}>
+                                    <h2 className={`text-lg sm:text-xl font-bold mb-1.5 ${selectedPlan === index ? 'text-teal-700' : 'text-gray-900'}`}>
                                         {plan.name}
                                     </h2>
 
                                     {/* Price Section */}
-                                    <div className="mb-4">
+                                    <div className="mb-3">
                                         {plan.oldPrice && (
-                                            <div className="flex items-center justify-center gap-2 mb-1">
-                                                <span className="text-gray-400 line-through text-sm">{plan.oldPrice}</span>
+                                            <div className="flex items-center justify-center gap-1.5 mb-0.5">
+                                                <span className="text-gray-400 line-through text-xs">{plan.oldPrice}</span>
                                                 {plan.discount && (
-                                                    <span className="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded">
+                                                    <span className="bg-red-100 text-red-700 text-xs font-bold px-1.5 py-0.5 rounded">
                                                         {plan.discount}
                                                     </span>
                                                 )}
                                             </div>
                                         )}
                                         <div className="flex items-baseline justify-center">
-                                            <span className={`text-3xl sm:text-4xl font-bold ${selectedPlan === index ? 'text-teal-800' : 'text-gray-900'}`}>
+                                            <span className={`text-2xl sm:text-3xl font-bold ${selectedPlan === index ? 'text-teal-800' : 'text-gray-900'}`}>
                                                 {plan.price}
                                             </span>
-                                            <span className="text-gray-500 text-sm ml-1">/plan</span>
+                                            <span className="text-gray-500 text-xs ml-1">/plan</span>
                                         </div>
                                     </div>
 
                                     {/* Divider */}
-                                    <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-4"></div>
+                                    <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-3"></div>
                                 </div>
 
                                 {/* Features List */}
-                                <div className="space-y-3 sm:space-y-4 mb-6">
+                                <div className="space-y-2 sm:space-y-3 mb-4">
                                     {plan.features.map((feature, i) => (
-                                        <div key={i} className="flex items-center justify-between">
-                                            <div className="flex items-center gap-3">
+                                        <div key={i} className="flex items-center justify-between min-h-[32px]">
+                                            <div className="flex items-center gap-2">
                                                 <FontAwesomeIcon 
                                                     icon={feature.icon} 
-                                                    className="text-gray-400 text-sm" 
+                                                    className="text-gray-400 text-xs" 
                                                 />
-                                                <span className="text-sm text-gray-600">{feature.label}</span>
+                                                <span className="text-xs text-gray-600">{feature.label}</span>
                                             </div>
                                             <div className="text-right">
                                                 {renderFeatureValue(feature.value)}
@@ -273,18 +271,18 @@ const Subscription = () => {
                                         e.stopPropagation();
                                         handleBuyNow(plan.name);
                                     }}
-                                    className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${plan.buttonColor} shadow-md hover:shadow-lg flex items-center justify-center gap-2`}
+                                    className={`w-full py-2.5 rounded-lg font-semibold transition-all duration-300 ${plan.buttonColor} shadow-sm hover:shadow flex items-center justify-center gap-1.5 text-sm`}
                                 >
                                     {plan.buttonText}
                                     {index !== 0 && (
-                                        <FontAwesomeIcon icon={faArrowRight} className="text-sm" />
+                                        <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
                                     )}
                                 </button>
 
                                 {/* Selection Indicator */}
                                 {selectedPlan === index && (
-                                    <div className="absolute top-4 right-4 w-6 h-6 bg-teal-500 rounded-full flex items-center justify-center animate-pulse">
-                                        <FontAwesomeIcon icon={faCheck} className="text-white text-xs" />
+                                    <div className="absolute top-3 right-3 w-5 h-5 bg-teal-500 rounded-full flex items-center justify-center animate-pulse">
+                                        <FontAwesomeIcon icon={faCheck} className="text-white text-[10px]" />
                                     </div>
                                 )}
                             </div>
@@ -292,75 +290,26 @@ const Subscription = () => {
                     ))}
                 </div>
 
-                {/* Comparison Table (Mobile - Horizontal Scroll) */}
-                <div className="lg:hidden mt-8">
-                    <div className="bg-white rounded-2xl border border-gray-200 p-4">
-                        <h3 className="text-lg font-semibold text-gray-900 mb-4">Feature Comparison</h3>
-                        <div className="overflow-x-auto">
-                            <table className="w-full min-w-max">
-                                <thead>
-                                    <tr className="border-b">
-                                        <th className="text-left py-3 text-sm font-medium text-gray-500">Feature</th>
-                                        {plans.map((plan, index) => (
-                                            <th key={index} className="text-center py-3">
-                                                <div className="text-xs font-semibold text-gray-700">{plan.name}</div>
-                                            </th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {plans[0].features.map((_, featureIndex) => (
-                                        <tr key={featureIndex} className="border-b last:border-b-0">
-                                            <td className="py-3 text-sm text-gray-600">
-                                                {plans[0].features[featureIndex].label}
-                                            </td>
-                                            {plans.map((plan, planIndex) => (
-                                                <td key={planIndex} className="py-3 text-center">
-                                                    {renderFeatureValue(plan.features[featureIndex].value)}
-                                                </td>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
                 {/* Selected Plan Summary */}
                 {selectedPlan !== null && (
-                    <div className="mt-8 lg:mt-12 max-w-4xl mx-auto">
-                        <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-2xl border border-teal-200 p-6 shadow-lg animate-fadeIn">
-                            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-                                <div className="text-center lg:text-left">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <div className={`w-10 h-10 rounded-full ${plans[selectedPlan].gradient} flex items-center justify-center`}>
-                                            <FontAwesomeIcon icon={plans[selectedPlan].icon} className="text-gray-700" />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold text-gray-900">
-                                                Selected: <span className="text-teal-700">{plans[selectedPlan].name} Plan</span>
-                                            </h3>
-                                            <p className="text-gray-600 text-sm mt-1">
-                                                {plans[selectedPlan].price} • {plans[selectedPlan].features[5].value} validity
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div className="mt-6 lg:mt-10 max-w-4xl mx-auto">
+                        <div className="bg-gradient-to-r from-teal-50 to-emerald-50 rounded-xl border border-teal-200 p-4 sm:p-5 shadow-md animate-fadeIn">
+                            <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
                                 
-                                <div className="flex flex-col sm:flex-row gap-3">
+                                
+                                <div className="flex flex-col sm:flex-row gap-2.5">
                                     <button
                                         onClick={() => setSelectedPlan(null)}
-                                        className="px-5 py-2.5 border border-gray-300 text-gray-700 rounded-lg font-medium hover:border-gray-400 hover:bg-gray-50 transition-colors"
+                                        className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:border-gray-400 hover:bg-gray-50 transition-colors text-sm"
                                     >
                                         Change Plan
                                     </button>
                                     <button
                                         onClick={() => handleBuyNow(plans[selectedPlan].name)}
-                                        className="px-6 py-2.5 bg-gradient-to-r from-teal-600 to-emerald-500 text-white rounded-lg font-semibold hover:from-teal-700 hover:to-emerald-600 transition-all shadow-md flex items-center justify-center gap-2"
+                                        className="px-5 py-2 bg-gradient-to-r from-teal-600 to-emerald-500 text-white rounded-lg font-semibold hover:from-teal-700 hover:to-emerald-600 transition-all shadow-sm flex items-center justify-center gap-1.5 text-sm"
                                     >
                                         Proceed to Payment
-                                        <FontAwesomeIcon icon={faArrowRight} />
+                                        <FontAwesomeIcon icon={faArrowRight} className="text-xs" />
                                     </button>
                                 </div>
                             </div>
@@ -369,8 +318,8 @@ const Subscription = () => {
                 )}
 
                 {/* Additional Info */}
-                <div className="mt-8 lg:mt-12 text-center">
-                    <p className="text-gray-500 text-sm">
+                <div className="mt-6 lg:mt-10 text-center">
+                    <p className="text-gray-500 text-xs">
                         <span className="font-semibold text-teal-600">Note:</span> All prices include GST. 
                         7-day money-back guarantee on all paid plans. 
                         Upgrade or downgrade anytime.
@@ -397,17 +346,17 @@ const Subscription = () => {
 
                 /* Custom scrollbar for mobile comparison */
                 .overflow-x-auto::-webkit-scrollbar {
-                    height: 6px;
+                    height: 4px;
                 }
 
                 .overflow-x-auto::-webkit-scrollbar-track {
                     background: #f1f1f1;
-                    border-radius: 10px;
+                    border-radius: 8px;
                 }
 
                 .overflow-x-auto::-webkit-scrollbar-thumb {
                     background: #cbd5e1;
-                    border-radius: 10px;
+                    border-radius: 8px;
                 }
 
                 .overflow-x-auto::-webkit-scrollbar-thumb:hover {

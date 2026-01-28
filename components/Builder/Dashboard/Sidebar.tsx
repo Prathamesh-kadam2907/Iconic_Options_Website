@@ -33,12 +33,12 @@ const menu: MenuItem[] = [
         mobileLabel: 'Properties',
         component: <DashboardPage />,
     },
-    {
-        name: 'Projects',
-        icon: <FontAwesomeIcon icon={faBuilding} />,
-        mobileLabel: 'Projects',
-        component: <Projects />,
-    },
+    // {
+    //     name: 'Projects',
+    //     icon: <FontAwesomeIcon icon={faBuilding} />,
+    //     mobileLabel: 'Projects',
+    //     component: <Projects />,
+    // },
     {
         name: 'Profile',
         icon: <FontAwesomeIcon icon={faUser} />,

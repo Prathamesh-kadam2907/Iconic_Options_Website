@@ -18,6 +18,7 @@ import {
     faArrowRight,
     faEye,
     faEyeSlash,
+    faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 // Step definitions
@@ -808,11 +809,11 @@ const BuilderRegister: React.FC = () => {
                 <div className="text-center mt-6">
                     <p className="text-gray-600 text-sm">
                         Already have a builder account?{' '}
-                        <Link href="/builder/login" className="text-purple-600 font-medium hover:underline">
+                        <Link href="/builder/BuilderLogin" className="text-purple-600 font-medium hover:underline">
                             Login here
                         </Link>
                     </p>
-                    <Link href="/builderlogin" className="inline-block mt-2 text-sm text-gray-500 hover:text-gray-700 hover:underline">
+                    <Link href="/builder/BuilderLogin" className="inline-block mt-2 text-sm text-gray-500 hover:text-gray-700 hover:underline">
                         ← Back to User Login
                     </Link>
                 </div>

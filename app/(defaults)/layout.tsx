@@ -8,6 +8,7 @@ import ScrollToTop from '@/components/layouts/scroll-to-top';
 
 import Portals from '@/components/portals';
 import BuilderDashboard from '@/components/Builder/BuilderDashboard';
+import BuilderLogin from '@/components/Builder/Pages/BuilderLogin';
 
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
     return (
@@ -34,7 +35,8 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
                        
                         
                         <Footer /> */}
-                        <BuilderDashboard></BuilderDashboard>
+                        {/* <BuilderDashboard></BuilderDashboard> */}
+                        <BuilderLogin></BuilderLogin>
                        
                         <Portals />
                     </div>

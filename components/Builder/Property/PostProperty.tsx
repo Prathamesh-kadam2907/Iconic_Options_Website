@@ -44,7 +44,7 @@ interface UnitType {
     id: string;
     type: string;
     totalUnits: number;
-    availableUnits: number;
+    image: File | null;
     carpetArea: string;
     price: string;
     pricePerSqft: string;
@@ -172,13 +172,18 @@ export default function PostPropertyPage() {
             id: Date.now().toString(),
             type: '',
             totalUnits: 0,
-            availableUnits: 0,
+            image: null,
             carpetArea: '',
             price: '',
             pricePerSqft: '',
         };
         setFormData({ ...formData, unitTypes: [...formData.unitTypes, newUnit] });
     };
+
+    const handleUnitImageUpload = (id: string, file: File) => {
+    updateUnitType(id, 'image', file);
+};
+
 
     const removeUnitType = (id: string) => {
         setFormData({ ...formData, unitTypes: formData.unitTypes.filter((unit) => unit.id !== id) });
@@ -671,7 +676,12 @@ export default function PostPropertyPage() {
                                                     {[
                                                         { label: 'Unit Type *', type: 'select', value: unit.type, onChange: (e: any) => updateUnitType(unit.id, 'type', e.target.value), options: unitTypeOptions },
                                                         { label: 'Total Units *', type: 'number', value: unit.totalUnits, onChange: (e: any) => updateUnitType(unit.id, 'totalUnits', parseInt(e.target.value) || 0), placeholder: 'Total units' },
-                                                        { label: 'Available Units *', type: 'number', value: unit.availableUnits, onChange: (e: any) => updateUnitType(unit.id, 'availableUnits', parseInt(e.target.value) || 0), placeholder: 'Available units' },
+                                                        {
+  label: 'Unit Image *',
+  type: 'file'
+},
+
+                                                       
                                                         { label: 'Carpet Area (sq.ft) *', type: 'text', value: unit.carpetArea, onChange: (e: any) => updateUnitType(unit.id, 'carpetArea', e.target.value), placeholder: 'e.g., 1200-1500' },
                                                         { label: 'Price Range (₹) *', type: 'text', value: unit.price, onChange: (e: any) => updateUnitType(unit.id, 'price', e.target.value), placeholder: 'e.g., 75L-85L' },
                                                         { label: 'Price per sq.ft (₹)', type: 'text', value: unit.pricePerSqft, onChange: (e: any) => updateUnitType(unit.id, 'pricePerSqft', e.target.value), placeholder: 'e.g., 6000' },
@@ -681,22 +691,43 @@ export default function PostPropertyPage() {
                                                                 <span className="text-base font-semibold text-gray-900">{field.label}</span>
                                                             </label>
                                                             {field.type === 'select' ? (
-                                                                <div className="relative">
-                                                                    <select
-                                                                        value={field.value}
-                                                                        onChange={field.onChange}
-                                                                        className="w-full px-4 py-3.5 text-base border-2 border-gray-300 rounded-xl focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all duration-300 outline-none appearance-none"
-                                                                    >
-                                                                        <option value="">Select type</option>
-                                                                        {field.options?.map((option) => (
-                                                                            <option key={option} value={option}>
-                                                                                {option}
-                                                                            </option>
-                                                                        ))}
-                                                                    </select>
-                                                                    <FontAwesomeIcon icon={faChevronRight} className="absolute right-4 top-1/2 transform -translate-y-1/2 rotate-90 text-gray-400" />
-                                                                </div>
-                                                            ) : (
+    <div className="relative">
+        <select
+            value={field.value}
+            onChange={field.onChange}
+            className="w-full px-4 py-3.5 text-base border-2 border-gray-300 rounded-xl focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition-all duration-300 outline-none appearance-none"
+        >
+            <option value="">Select type</option>
+            {field.options?.map((option) => (
+                <option key={option} value={option}>
+                    {option}
+                </option>
+            ))}
+        </select>
+        <FontAwesomeIcon icon={faChevronRight} className="absolute right-4 top-1/2 transform -translate-y-1/2 rotate-90 text-gray-400" />
+    </div>
+) : field.type === 'file' ? (
+    <div>
+        <input
+            type="file"
+            accept="image/*"
+            onChange={(e: any) => {
+                if (e.target.files?.[0]) {
+                    handleUnitImageUpload(unit.id, e.target.files[0]);
+                }
+            }}
+            className="w-full px-4 py-2 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer hover:border-teal-400"
+        />
+
+        {unit.image && (
+            <p className="text-sm text-green-600 mt-2 font-medium">
+                ✅ {unit.image.name}
+            </p>
+        )}
+    </div>
+) : (
+
+                                                              
                                                                 <input
                                                                     type={field.type}
                                                                     value={field.value}

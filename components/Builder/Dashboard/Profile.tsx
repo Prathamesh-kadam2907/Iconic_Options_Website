@@ -107,7 +107,7 @@ export default function Profile() {
 
     const renderProfileDetails = () => (
         <>
-            <div className="mb-6 sm:mb-8">
+            <div className="mb-6 sm:mb-4">
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-black mb-1 sm:mb-2">
                     Profile Details
                 </h2>
@@ -116,7 +116,7 @@ export default function Profile() {
                 </p>
             </div>
 
-            <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl sm:rounded-2xl border border-gray-200 p-4 sm:p-6 md:p-8 shadow-sm">
+            <div className="bg-gradient-to-br from-gray-50 to-white rounded-xl sm:rounded-2xl border border-gray-200 p-4 sm:p-6 md:p-2 shadow-sm">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                     {/* Personal Information Section */}
                     <div>
@@ -179,11 +179,11 @@ export default function Profile() {
                                 }
                                 color="text-red-600"
                                 bgColor="bg-red-50"
-                                action={
-                                    <button className="text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium hover:underline transition-colors whitespace-nowrap">
-                                        Add Alternate Email
-                                    </button>
-                                }
+                                // action={
+                                //     <button className="text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium hover:underline transition-colors whitespace-nowrap">
+                                //         Add Alternate Email
+                                //     </button>
+                                // }
                             />
                             
                             <InfoCard
@@ -202,14 +202,14 @@ export default function Profile() {
                                 }
                                 color="text-green-600"
                                 bgColor="bg-green-50"
-                                action={
-                                    <button className="text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium hover:underline transition-colors whitespace-nowrap">
-                                        Change Mobile
-                                    </button>
-                                }
+                                // action={
+                                //     <button className="text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium hover:underline transition-colors whitespace-nowrap">
+                                //         Change Mobile
+                                //     </button>
+                                // }
                             />
                             
-                            <InfoCard
+                            {/* <InfoCard
                                 icon={faShieldAlt}
                                 label="Password"
                                 value={
@@ -219,15 +219,15 @@ export default function Profile() {
                                 }
                                 color="text-orange-600"
                                 bgColor="bg-orange-50"
-                                action={
-                                    <button 
-                                        onClick={() => setActiveMenuItem('Change Password')}
-                                        className="text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium hover:underline transition-colors whitespace-nowrap"
-                                    >
-                                        Change Password
-                                    </button>
-                                }
-                            />
+                                // action={
+                                //     <button 
+                                //         onClick={() => setActiveMenuItem('Change Password')}
+                                //         className="text-xs sm:text-sm text-red-600 hover:text-red-700 font-medium hover:underline transition-colors whitespace-nowrap"
+                                //     >
+                                //         Change Password
+                                //     </button>
+                                // }
+                            /> */}
                         </div>
                     </div>
                 </div>
@@ -629,7 +629,7 @@ export default function Profile() {
     
     return (
         <div className="min-h-screen bg-gradient-to-br from-white to-teal-50/30">
-            <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
+            <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-2">
                 {/* Mobile Menu Toggle */}
                 <div className="lg:hidden mb-4">
                     <button
@@ -743,7 +743,7 @@ export default function Profile() {
                         </aside>
 
                         {/* Right Content - Responsive */}
-                        <section className="lg:col-span-3 p-4 sm:p-6 md:p-8">
+                        <section className="lg:col-span-3 p-4 sm:p-6 md:p-4">
                             {renderContent()}
                         </section>
                     </div>
