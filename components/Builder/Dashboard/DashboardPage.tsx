@@ -556,23 +556,11 @@ export default function DashboardPage() {
                                             </div>
                                         </div>
 
-                                        {/* Lead Sources */}
-                                        <div className="bg-gray-50 rounded-xl p-5">
-                                            <h4 className="text-lg font-semibold text-black mb-4 flex items-center gap-2">
-                                                <FontAwesomeIcon icon={faChartColumn} className="text-teal-600" />
-                                                Lead Sources
-                                            </h4>
-                                            <div className="space-y-3">
-                                                <SourceItem source="Website" percentage={40} color="bg-teal-500" />
-                                                <SourceItem source="Broker Network" percentage={35} color="bg-blue-500" />
-                                                <SourceItem source="Social Media" percentage={15} color="bg-purple-500" />
-                                                <SourceItem source="Referrals" percentage={10} color="bg-orange-500" />
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 </div>
 
-                                {/* Recent Activity */}
+                             
                                 <div className="bg-gray-50 rounded-xl p-5">
                                     <h4 className="text-lg font-semibold text-black mb-4">Recent Activity</h4>
                                     <div className="space-y-3">
@@ -598,7 +586,7 @@ export default function DashboardPage() {
                             </div>
                         </div>
 
-                        {/* Modal Footer */}
+                        
                         <div className="border-t p-6">
                             <div
                                 className="flex flex-row justify-between gap-3
@@ -627,37 +615,37 @@ export default function DashboardPage() {
                 </div>
             )}
 
-            <div className="mx-auto w-full max-w-7xl 2xl:max-w-[1600px] px-4 sm:px-6 lg:px-8 xl:px-10 py-6 space-y-6">
-                {/* Welcome Section */}
+            <div className="mx-auto w-full max-w-7xl 2xl:max-w-[1600px] px-4 sm:px-1 lg:px-2 xl:px-10 py-6 space-y-6">
+                
                 <div className="bg-white rounded-2xl shadow-sm p-6 border">
                     <h1 className="text-2xl md:text-2xl font-semibold text-black">Hi Prathamesh, Welcome to your Dashboard</h1>
                     <p className="text-sm text-gray-500 mt-1">Manage your properties, track performance and view buyer activity</p>
                 </div>
 
-                {/* Stats Grid */}
+                
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 ">
                     {stats.map((stat, index) => (
                         <div
                             key={index}
                             className="bg-gradient-to-br from-white to-gray-50 rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 p-4 sm:p-5 border border-gray-200 hover:border-teal-300 group flex flex-col items-center justify-center text-center"
                         >
-                            {/* Icon with background effect */}
+                           
                             <div className="relative mb-3 sm:mb-4">
                                 <div
                                     className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full ${stat.bgColor} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}
                                 >
                                     <FontAwesomeIcon icon={stat.icon} className={`${stat.color} text-base sm:text-lg`} />
                                 </div>
-                                {/* Glow effect on hover */}
+                               
                                 <div
                                     className={`absolute inset-0 w-10 h-10 sm:w-12 sm:h-12 rounded-full ${stat.bgColor} blur-sm opacity-0 group-hover:opacity-40 transition-opacity duration-300`}
                                 ></div>
                             </div>
 
-                            {/* Stats Value - Larger on mobile */}
+                          
                             <h3 className="text-2xl sm:text-3xl md:text-3xl font-bold text-black mb-1 sm:mb-2 leading-tight">{stat.value}</h3>
 
-                            {/* Label - Better spacing */}
+                            
                             <p className="text-sm sm:text-base font-semibold text-black mb-1 sm:mb-2 line-clamp-1">{stat.label}</p>
 
                             {/* Change indicator - Better visual hierarchy */}
@@ -706,14 +694,14 @@ export default function DashboardPage() {
                                 </button>
 
                                 {/* Buttons */}
-                                <div className="flex flex-wrap gap-3 mt-4">
+                                <div className="flex  gap-3 mt-4">
                                     <button
                                         onClick={() => handleEditProperty(1)} // Assuming ID 1 for this property
-                                        className="px-4 py-1.5 border border-gray-500 text-black rounded-full text-sm hover:bg-red-50 font-medium transition"
+                                        className="px-3 py-1.5 border border-gray-500 text-black rounded-full text-sm hover:bg-red-50 font-medium transition"
                                     >
                                         Edit Property
                                     </button>
-                                    <button onClick={() => handleViewDetails(1)} className="px-4 py-1.5 border border-gray-500 text-black rounded-full text-sm hover:bg-red-50 font-medium transition">
+                                    <button onClick={() => handleViewDetails(1)} className="px-3 py-1.5 border border-gray-500 text-black rounded-full text-sm hover:bg-red-50 font-medium transition">
                                         View Details
                                     </button>
                                 </div>
@@ -749,10 +737,10 @@ export default function DashboardPage() {
 
                 {/* Content based on active tab */}
                 {activeTab === 'overview' && (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
                         {/* Properties List */}
                         <div className="lg:col-span-2 space-y-4">
-                            <div className="bg-white rounded-2xl shadow-sm border-0 sm:border p-0 sm:p-3 lg:p-4 xl:p-5">
+                            <div className="bg-white rounded-2xl shadow-sm border-0 sm:0 xl:border p-0 sm:p-3 lg:p-0 xl:p-5">
                                 <div className="flex items-center justify-between mb-5">
                                     <h2 className="text-lg font-semibold text-black">Projects </h2>
                                 </div>
@@ -761,18 +749,19 @@ export default function DashboardPage() {
                                     {properties.map((property) => (
                                         <div
                                             key={property.id}
-                                            className="border rounded-2xl shadow-sm p-4 sm:p-5 lg:p-6 xl:p-7 bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+                                            className="border rounded-2xl shadow-sm p-4 sm:p-5 lg:p-2 xl:p-7 bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                                         >
-                                            <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 items-start md:items-center xl:items-center">
+                                            <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-2 items-start md:items-center xl:items-center">
                                                 {/* Image */}
                                                 <div className="w-full sm:w-40 md:w-52 lg:w-64 xl:w-80 2xl:w-96 h-44 md:h-48 lg:h-52 xl:h-56 2xl:h-60 rounded-xl border overflow-hidden shrink-0">
                                                     <img src={property.image} alt={property.name} className="w-full h-full object-cover" />
                                                 </div>
 
                                                 {/* Details */}
-                                                <div className="flex-1">
-                                                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                                                        <h3 className="text-base sm:text-lg font-semibold text-black">{property.name}</h3>
+                                                <div className="flex-1 mx-auto text-center sm:text-left flex flex-col items-center sm:items-start">
+
+                                                    <div className="flex items-center justify-between gap-2">
+                                                        <h3 className="text-lg sm:text-2xl font-semibold text-black">{property.name}</h3>
 
                                                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(property.status)}`}>{property.status}</span>
                                                     </div>
@@ -792,7 +781,7 @@ export default function DashboardPage() {
                                                         </span>
                                                     </div>
 
-                                                    <div className="flex gap-3 mt-4 flex-wrap sm:flex-nowrap">
+                                                    <div className="flex gap-2 mt-4 flex-wrap sm:flex-nowrap">
                                                         <button
                                                             onClick={() => handleEditProperty(property.id)}
                                                             className="px-4 py-1 border border-gray-400 rounded-md text-sm font-medium hover:bg-gray-100"
