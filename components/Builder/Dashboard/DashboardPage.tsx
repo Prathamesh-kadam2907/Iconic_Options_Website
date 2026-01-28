@@ -262,30 +262,22 @@ export default function DashboardPage() {
 
     const [showSubscription, setShowSubscription] = useState(false);
 
-
     return (
         <div className="min-h-screen bg-white">
             {/* Edit Property Popup Modal */}
             {showSubscription && (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-        <div className="bg-white rounded-2xl w-[95%] sm:w-[80%] md:w-[60%] lg:w-[50%] h-[80vh] shadow-xl relative">
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                    <div className="bg-white rounded-2xl w-[95%] sm:w-[80%] md:w-[60%] lg:w-[50%] h-[80vh] shadow-xl relative">
+                        {/* Close Button */}
+                        <button onClick={() => setShowSubscription(false)} className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl">
+                            ✕
+                        </button>
 
-            {/* Close Button */}
-            <button
-                onClick={() => setShowSubscription(false)}
-                className="absolute top-3 right-3 text-gray-500 hover:text-red-500 text-xl"
-            >
-                ✕
-            </button>
-
-            {/* Page inside modal */}
-            <iframe
-                src="/builder/BuilderSubscription"
-                className="w-full h-full rounded-2xl"
-            />
-        </div>
-    </div>
-)}
+                        {/* Page inside modal */}
+                        <iframe src="/builder/BuilderSubscription" className="w-full h-full rounded-2xl" />
+                    </div>
+                </div>
+            )}
 
             {isEditPopupOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
@@ -296,7 +288,7 @@ export default function DashboardPage() {
                                 <h2 className="text-2xl font-bold text-black">Edit Property</h2>
                                 <p className="text-gray-500 mt-1">Editing: {selectedProperty?.name || 'Property'}</p>
                             </div>
-                            <button onClick={handleClosePopup} className="p-2 hover:bg-gray-100 rounded-full transition">
+                            <button onClick={handleClosePopup} className="hidden sm:block p-2 hover:bg-gray-100 rounded-full transition">
                                 <FontAwesomeIcon icon={faXmark} className="text-gray-500 text-xl" />
                             </button>
                         </div>
@@ -465,7 +457,7 @@ export default function DashboardPage() {
                                     <span className="text-sm text-gray-500">ID: PROJ-{selectedPropertyForDetails.id.toString().padStart(6, '0')}</span>
                                 </div>
                             </div>
-                            <button onClick={() => setShowDetailsModal(false)} className="p-2 hover:bg-gray-100 rounded-full transition">
+                            <button onClick={() => setShowDetailsModal(false)} className="hidden sm:block p-2 hover:bg-gray-100 rounded-full transition">
                                 <FontAwesomeIcon icon={faXmark} className="text-gray-500 text-xl" />
                             </button>
                         </div>
@@ -608,21 +600,24 @@ export default function DashboardPage() {
 
                         {/* Modal Footer */}
                         <div className="border-t p-6">
-                            <div className="flex flex-col sm:flex-row justify-between gap-4">
+                            <div
+                                className="flex flex-row justify-between gap-3
+"
+                            >
                                 <div className="flex items-center gap-3">
                                     <button
                                         onClick={() => {
                                             setShowDetailsModal(false);
                                             handleEditProperty(selectedPropertyForDetails.id);
                                         }}
-                                        className="px-6 py-3 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 transition flex items-center gap-2"
+                                        className="px-3 py-2 border border-teal-600 text-teal-600 rounded-lg hover:bg-teal-50 transition flex items-center gap-2"
                                     >
                                         <FontAwesomeIcon icon={faPenToSquare} />
                                         Edit Property
                                     </button>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <button onClick={() => setShowDetailsModal(false)} className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                                    <button onClick={() => setShowDetailsModal(false)} className="px-3 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
                                         Close
                                     </button>
                                 </div>
@@ -742,13 +737,12 @@ export default function DashboardPage() {
                             <p className="text-sm text-black mb-2">Your Free Listing is visible to fewer Buyers!</p>
                             <p className="text-sm font-semibold text-black mb-3">Get more Responses with Premium Plan</p>
                             <button
-    onClick={() => setShowSubscription(true)}
-    className="w-full bg-teal-600 text-white py-2 px-4 rounded-lg font-medium text-sm hover:bg-teal-700 transition shadow-md inline-flex items-center justify-center gap-2"
->
-    Upgrade Now
-    <FontAwesomeIcon icon={faArrowRight} />
-</button>
-
+                                onClick={() => setShowSubscription(true)}
+                                className="w-full bg-teal-600 text-white py-2 px-4 rounded-lg font-medium text-sm hover:bg-teal-700 transition shadow-md inline-flex items-center justify-center gap-2"
+                            >
+                                Upgrade Now
+                                <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
                         </div>
                     </div>
                 </div>
